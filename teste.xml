@@ -1,0 +1,138 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.openapitools</groupId>
+    <artifactId>sample-project</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>sample-project</name>
+    <url>https://maven.apache.org</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.10.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- specify the swagger yaml -->
+                            <inputSpec>${project.basedir}/swagger.yaml</inputSpec>
+                            <cleanupOutput>true</cleanupOutput>
+
+                            <!-- target to generate kotlin client code -->
+                            <generatorName>kotlin</generatorName>
+
+                            <!-- hint: if you want to generate kotlin server code, e.g. based on Spring Boot,
+                                 you can use the following generator: <generatorName>kotlin-spring</generatorName> -->
+
+                            <!-- pass any necessary config options -->
+                            <configOptions>
+                                <serializableModel>true</serializableModel>
+                            </configOptions>
+
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>kotlin</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- specify the swagger yaml -->
+                            <inputSpec>
+                                https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/modules/openapi-generator/src/test/resources/2_0/petstore.yaml
+                            </inputSpec>
+
+                            <!-- target to generate java client code -->
+                            <generatorName>kotlin</generatorName>
+
+                            <!-- hint: if you want to generate java server code, e.g. based on Spring Boot,
+                                 you can use the following target: <generatorName>spring</generatorName> -->
+
+                            <!-- pass any necessary config options -->
+                            <configOptions>
+                                <serializableModel>true</serializableModel>
+                            </configOptions>
+
+                            <output>${project.build.directory}/generated-sources/kotlin</output>
+                            <apiPackage>kotlintest.org.openapitools.client.api</apiPackage>
+                            <modelPackage>kotlintest.org.openapitools.client.model</modelPackage>
+                            <invokerPackage>kotlintest.org.openapitools.client</invokerPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <proc>none</proc>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <configuration>
+                    <jvmTarget>${kotlinJvmTarget}</jvmTarget>
+                    <javacOptions/>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.build.directory}/generated-sources/kotlin/src/main/kotlin
+                                </sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <version>${kotlin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <properties>
+        <swagger-annotations-version>1.5.8</swagger-annotations-version>
+        <jersey-version>2.27</jersey-version>
+        <jackson-version>2.15.2</jackson-version>
+        <jackson-databind-nullable-version>0.2.0</jackson-databind-nullable-version>
+        <jodatime-version>2.7</jodatime-version>
+        <maven-plugin-version>1.0.0</maven-plugin-version>
+        <junit-version>4.13.2</junit-version>
+        <kotlin.version>1.5.10</kotlin.version>
+        <kotlinJvmTarget>1.8</kotlinJvmTarget>
+        <moshi-kotlin.version>1.12.0</moshi-kotlin.version>
+        <migbase64.version>2.2</migbase64.version>
+    </properties>
+</project>

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: longeviverapi-pod
+  labels:
+    app: longeviverapi
+spec:
+  containers:
+    - name: longeviverapi-container
+      image: longeviverapi:1.0
+      ports:
+        - containerPort: 8080

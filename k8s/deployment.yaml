@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: longeviver-fitness-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: longeviver-fitness-app
+  template:
+    metadata:
+      labels:
+        app: longeviver-fitness-app
+    spec:
+      containers:
+        - name: longeviver-fitness-app
+          image: longeviverapi:1.0
+          ports:
+            - containerPort: 8080
