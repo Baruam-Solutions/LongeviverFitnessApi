@@ -19,6 +19,10 @@ Certifique-se de que as seguintes ferramentas estejam instaladas:
 
 Comandos úteis para criar e gerenciar o ambiente Docker:
 
+* Criar container com imagem do postgresSQL
+   * `docker run --name meu_postgres -e POSTGRES_USER=meu_usuario -e POSTGRES_PASSWORD=minha_senha -e POSTGRES_DB=meu_banco -p 5432:5432 -d postgres`
+
+
 * Criar imagem Docker a partir do [Dockerfile:](Dockerfile)
     * `docker build -t longeviverapi:1.0 .`
 * Criar um container a partir da imagem criada (add --network="host" para o Docker conectar ao localhost do PostgreSQL):
