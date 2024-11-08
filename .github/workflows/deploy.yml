@@ -24,11 +24,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${GKE_CONTAINER_REGISTRY}/${{ secrets.GCP_PROJECT_ID }}/longeviverfitness:latest .
+          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest .
 
       - name: Push Docker image
         run: |
-          docker push ${GKE_CONTAINER_REGISTRY}/${{ secrets.GCP_PROJECT_ID }}/longeviverfitness:latest
+          docker push ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest
 
       - name: Set up GKE credentials
         run: |
@@ -36,6 +36,6 @@ jobs:
 
       - name: Deploy to GKE
         env:
-          IMAGE: ${GKE_CONTAINER_REGISTRY}/${{ secrets.GCP_PROJECT_ID }}/longeviverfitness:latest
+          IMAGE: ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest
         run: |
           kubectl apply -f k8s/
