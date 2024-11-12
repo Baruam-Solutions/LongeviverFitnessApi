@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v2
 
       - name: Set up Google Cloud SDK
@@ -25,6 +25,11 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest .
+
+      - name: Login to Artifact Registry
+        run: |
+          echo ${{ secrets.GCP_SA_KEY }} | gcloud auth activate-service-account --key-file=-
+          gcloud auth configure-docker ${GKE_CONTAINER_REGISTRY%%/*} --quiet
 
       - name: Push Docker image
         run: |
