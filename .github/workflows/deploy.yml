@@ -29,7 +29,7 @@ jobs:
       - name: Login to Artifact Registry
         run: |
           echo "${{ secrets.GCP_SA_KEY }}" | gcloud auth activate-service-account --key-file=/dev/stdin
-          gcloud auth configure-docker ${{ secrets.GKE_CONTAINER_REGISTRY }} --quiet
+          gcloud auth configure-docker ${GKE_CONTAINER_REGISTRY%%/*} --quiet
 
       - name: Push Docker image
         run: |
