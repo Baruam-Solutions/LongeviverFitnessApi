@@ -28,7 +28,7 @@ jobs:
 
       - name: Login to Artifact Registry
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" > "$HOME"/gcp-key.json
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > "$HOME"/gcp-key.json
           gcloud auth activate-service-account --key-file="$HOME"/gcp-key.json
           gcloud auth configure-docker "${{ secrets.GKE_CONTAINER_REGISTRY }}" --quiet
 
