@@ -27,11 +27,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest .
+          docker build -t southamerica-east1-docker.pkg.dev/longeviverfitness/longeviverfitness-repositorio/longeviverfitness:latest .
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest
+          docker push southamerica-east1-docker.pkg.dev/longeviverfitness/longeviverfitness-repositorio/longeviverfitness:latest
 
       - name: Set up GKE credentials
         run: |
@@ -39,6 +39,6 @@ jobs:
 
       - name: Deploy to GKE
         env:
-          IMAGE: ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest
+          IMAGE: southamerica-east1-docker.pkg.dev/longeviverfitness/longeviverfitness-repositorio/longeviverfitness:latest
         run: |
           kubectl apply -f k8s/
