@@ -19,18 +19,15 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Configure Docker
-        run: gcloud auth configure-docker ${{ secrets.GKE_CONTAINER_REGISTRY }} --quiet
+      - name: Configure Docker with Artifact Registry
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > "$HOME"/gcp-key.json
+          gcloud auth activate-service-account --key-file="$HOME"/gcp-key.json
+          gcloud auth configure-docker ${GKE_CONTAINER_REGISTRY%%/*} --quiet
 
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest .
-
-      - name: Login to Artifact Registry
-        run: |
-          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > "$HOME"/gcp-key.json
-          gcloud auth activate-service-account --key-file="$HOME"/gcp-key.json
-          gcloud auth configure-docker "${{ secrets.GKE_CONTAINER_REGISTRY }}" --quiet
 
       - name: Push Docker image
         run: |
