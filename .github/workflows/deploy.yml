@@ -19,6 +19,11 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Install gke-gcloud-auth-plugin
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          install_components: gke-gcloud-auth-plugin
+
       - name: Configure Docker with Artifact Registry
         run: |
           echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > "$HOME"/gcp-key.json
@@ -36,12 +41,6 @@ jobs:
       - name: Set up GKE credentials
         run: |
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --zone ${{ secrets.GKE_CLUSTER_ZONE }} --project ${{ secrets.GCP_PROJECT_ID }}
-
-      - name: Install gke-gcloud-auth-plugin
-        run: |
-          sudo apt-get update && sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
-        env:
-          CLOUDSDK_CORE_DISABLE_PROMPTS: '1'
 
       - name: Deploy to GKE
         env:
