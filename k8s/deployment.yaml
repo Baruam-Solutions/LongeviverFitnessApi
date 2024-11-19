@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: longeviver-fitness-app
-          image: longeviverapi:1.0
+          image: southamerica-east1-docker.pkg.dev/longeviverfitness/longeviverfitness-repositorio/longeviverfitness:latest
           ports:
             - containerPort: 8080
       imagePullSecrets:
