@@ -17,3 +17,5 @@ spec:
           image: longeviverapi:1.0
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: artifact-registry-secret
