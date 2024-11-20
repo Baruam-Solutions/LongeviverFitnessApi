@@ -46,4 +46,4 @@ jobs:
         env:
           IMAGE: ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest
         run: |
-          kubectl apply -f k8s/
+          kubectl apply -f infra/k8s/
