@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: longeviver-fitness-app
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: longeviver-fitness-app

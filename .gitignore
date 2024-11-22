@@ -38,3 +38,6 @@ src/test/resources/application.yml
 
 src/main/resources/app.key
 src/main/resources/app.pub
+/infra/terraform/.terraform.lock.hcl
+/infra/terraform/terraform.tfstate
+/infra/terraform/.terraform/
