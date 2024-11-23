@@ -7,6 +7,7 @@ WORKDIR /app
 
 RUN mvn clean package -DskipTests
 
+#todo trocar por JRE
 FROM openjdk:21-jdk
 
 COPY --from=build /app/target/longeviverfitness-0.0.1-SNAPSHOT.jar /app/app.jar

@@ -26,10 +26,17 @@ Comandos úteis para criar e gerenciar o ambiente Docker:
 
 
 * Criar imagem Docker a partir do [Dockerfile:](Dockerfile)
-    * `docker build -t longeviverapi:1.0 .`
+    * `docker build -t longeviverfitness:v1 .`
 * Criar um container a partir da imagem criada (add --network="host" para o Docker conectar ao localhost do PostgreSQL):
-    * `docker run -p 8080:8080 longeviverapi:1.0`
-    * `docker run --network="host" -p 8080:8080 longeviverapi:1.0`
+    * `docker run -p 8080:8080 longeviverfitness:v1`
+    * `docker run --network="host" -p 8080:8080 longeviverfitness:v1`
+* Subir imagem Docker para Google Cloud
+  * Autentique seu Docker para permitir o push da imagem
+    * `gcloud auth configure-docker us-central1-docker.pkg.dev`
+  * Taggear a Imagem para Enviar ao Artifact Registry
+    * `docker tag longeviverfitness:v1 us-central1-docker.pkg.dev/[SEU_PROJETO_ID]/[NOME_DO_BUCKET]/longeviverfitness:v1`
+  * Push para o Google Cloud
+    * `docker push us-central1-docker.pkg.dev/[SEU_PROJETO_ID]/[NOME_DO_BUCKET]/longeviverfitness:v1`
 
 ## Kubectl
 

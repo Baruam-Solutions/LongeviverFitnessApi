@@ -29,7 +29,27 @@
     <properties>
         <java.version>21</java.version>
         <kotlin.version>1.9.25</kotlin.version>
+        <spring-cloud-gcp.version>2.0.4</spring-cloud-gcp.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>spring-cloud-gcp-dependencies</artifactId>
+                <version>${spring-cloud-gcp.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -103,6 +123,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -147,34 +173,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
-<!--            <plugin>-->
-<!--                <groupId>org.openapitools</groupId>-->
-<!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
-<!--                <version>7.9.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>generate</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <inputSpec>${project.basedir}/src/main/resources/swagger.yaml</inputSpec>-->
-<!--                            <cleanupOutput>true</cleanupOutput>-->
-
-<!--                            <generatorName>kotlin</generatorName>-->
-
-<!--                            <apiPackage>com.longeviverfitness.api</apiPackage>-->
-<!--                            <modelPackage>com.longeviverfitness.model</modelPackage>-->
-
-<!--                            <supportingFilesToGenerate>ApiUtil.kt</supportingFilesToGenerate>-->
-
-<!--                            <configOptions>-->
-<!--                                <serializableModel>true</serializableModel>-->
-<!--                            </configOptions>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 
