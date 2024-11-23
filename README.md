@@ -9,6 +9,7 @@ de condicionamento físico em um ambiente de longa vida.
 Certifique-se de que as seguintes ferramentas estejam instaladas:
 
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
+* [Minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download)
 * [Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/) (kubectl)
 * [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/) (Kubernetes in Docker)
 * [Java 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)

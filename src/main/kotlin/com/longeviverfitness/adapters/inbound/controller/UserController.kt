@@ -21,6 +21,10 @@ class UserController {
     @Autowired
     private lateinit var service: UserServicePort
 
+    @GetMapping("/v1/hello-world")
+    @Operation(summary = "Hello World", description = "Returns a Hello World")
+    fun helloWorld(): String = "Hello World"
+
     @GetMapping("/v1/{id}")
     @Operation(summary = "Find user by ID", description = "Returns a single user")
     fun userById(@PathVariable id: Long): ResponseEntity<UserDTO> =
