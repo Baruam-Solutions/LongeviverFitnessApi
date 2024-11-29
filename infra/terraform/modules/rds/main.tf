@@ -26,6 +26,18 @@ resource "google_sql_database_instance" "main" {
 
   settings {
     tier = var.tier
+    edition = var.edition
+    ip_configuration {
+      ssl_mode  = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
+    }
+    password_validation_policy {
+      min_length                  = 6
+      reuse_interval              = 2
+      complexity                  = "COMPLEXITY_DEFAULT"
+      disallow_username_substring = true
+      password_change_interval    = "30s"
+      enable_password_policy      = true
+    }
   }
 
   depends_on = [time_sleep.espera_30_seconds]
@@ -58,3 +70,4 @@ resource "google_project_iam_member" "client_cloud_sql" {
 
   depends_on = [google_service_account.service_account_sql]
 }
+

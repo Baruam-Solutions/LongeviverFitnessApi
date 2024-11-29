@@ -13,19 +13,21 @@ variable "database_version" {
 variable "region" {
   description = "Região da instância"
   type        = string
-  default     = "us-central1"
 }
 
 variable "tier" {
   description = "Tipo de máquina do banco de dados"
   type        = string
-  default     = "db-f1-micro"
+}
+
+variable "edition" {
+  description = "A edição da instancia"
+  type        = string
 }
 
 variable "database_name" {
   description = "Nome da base de dados para o projeto"
   type        = string
-  default     = "lgv"
 }
 
 variable "deletion_protection" {

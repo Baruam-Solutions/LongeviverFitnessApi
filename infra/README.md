@@ -54,6 +54,12 @@ Módulo para Configuração do PostgreSQL.
 * variables.tf: Define as variáveis usadas no módulo.
 * outputs.tf: Define as saídas do módulo, como o IP da instância.*/
 
+### terraform/modules/state_bucket/ - Cloud Storage para terraform states
+
+* main.tf: Define a criação do bucket para armazenar os estados remotamente.
+* variables.tf: Define as variáveis usadas no módulo.
+* outputs.tf: Define as saídas do módulo, como o nome do bucket.*/
+
 ### terraform/main.tf - Arquivo Principal
 
 O `main.tf` na raiz conecta os módulos e define o ambiente padrão a ser provisionado.
