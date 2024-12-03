@@ -26,6 +26,7 @@ resource "google_sql_database_instance" "main" {
 
   settings {
     tier = var.tier
+    edition = var.edition
   }
 
   depends_on = [time_sleep.espera_30_seconds]
