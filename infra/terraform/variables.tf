@@ -1,17 +1,17 @@
 variable "project-id" {
   description = "Id do projeto na cloud"
   type        = string
-  default     = "testelongevivier"
+  default     = "longeviverfitness"
 }
 
 variable "project-region" {
   description = "Região do recurso na cloud"
   type        = string
-  default     = "us-central1"
+  default     = "southamerica-east1"
 }
 
 variable "project-zone" {
   description = "Zona do recurso na cloud"
   type        = string
-  default     = "us-central1-c"
+  default     = "southamerica-east1-a"
 }

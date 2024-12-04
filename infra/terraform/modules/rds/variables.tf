@@ -36,7 +36,7 @@ variable "deletion_protection" {
   default     = true
 }
 
-variable "id-project" {
+variable "id_project" {
   description = "Id do projeto na cloud"
   type        = string
 }
