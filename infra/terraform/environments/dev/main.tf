@@ -6,12 +6,12 @@ module "rds" {
   tier                = "db-f1-micro"
   edition             = "ENTERPRISE"
   region              = "us-central1"
-  id-project          = var.project-id
+  id_project          = var.project_id
   deletion_protection = false
 }
 
 module "k8s" {
-  id_project               = var.project
+  id_project               = var.project_id
   source                   = "../../modules/k8s"
   cluster_name             = "longeviverfitness-cluster"
   cluster_location         = "southamerica-east1-a"

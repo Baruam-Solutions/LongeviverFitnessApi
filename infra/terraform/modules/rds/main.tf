@@ -25,10 +25,10 @@ resource "google_sql_database_instance" "main" {
   deletion_protection = var.deletion_protection
 
   settings {
-    tier = var.tier
+    tier    = var.tier
     edition = var.edition
     ip_configuration {
-      ssl_mode  = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
+      ssl_mode = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
     }
     password_validation_policy {
       min_length                  = 6

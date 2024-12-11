@@ -7,5 +7,5 @@ module "terraform_state_storage" {
 # Carrega o ambiente de dev como exemplo
 module "dev_rds" {
   source = "./environments/dev"
-  project-id = var.project-id
+  project_id = var.project_id
 }
