@@ -65,5 +65,3 @@ Comandos para gerenciar clusters Kubernetes com Kind:
   * `docker ps -a | grep kind`
 * Carregar imagem Docker no Kind para uso com kubectl:
   * `kind load docker-image longeviverapi:1.0`
-  
-Teste
