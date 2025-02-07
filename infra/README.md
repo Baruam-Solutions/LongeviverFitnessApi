@@ -64,4 +64,15 @@ Módulo para Configuração do PostgreSQL.
 
 O `main.tf` na raiz conecta os módulos e define o ambiente padrão a ser provisionado.
 
+## GCP
+
+Para realizar a implantação dos recursos na núvem, é necessário ter o CLI do GCP instalado e devidamente autenticado na conta Google.
+
+* [Instalar a CLI gcloud](https://cloud.google.com/sdk/docs/install?hl=pt-br)
+* [Autorizar a CLI gcloud](https://cloud.google.com/sdk/docs/install?hl=pt-br)
+* [Configuração de autenticação da gcloud CLI e configuração do ADC](https://cloud.google.com/docs/authentication/gcloud?hl=pt-br#gcloud-credentials)
+* [Como definir propriedades de configuração](https://cloud.google.com/sdk/docs/configurations?hl=pt-br#setting_configuration_properties)
+
+
+
 
