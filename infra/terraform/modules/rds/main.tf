@@ -28,7 +28,8 @@ resource "google_sql_database_instance" "main" {
     tier    = var.tier
     edition = var.edition
     ip_configuration {
-      ssl_mode = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
+      # ssl_mode = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED" TODO - Teste
+      ssl_mode = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     }
     password_validation_policy {
       min_length                  = 6
@@ -71,3 +72,12 @@ resource "google_project_iam_member" "client_cloud_sql" {
   depends_on = [google_service_account.service_account_sql]
 }
 
+# TODO - Usando para teste
+# cria um usuário para acessar o sql
+resource "google_sql_user" "postgres_user" {
+  name     = "postgres"
+  instance = google_sql_database_instance.main.name
+  password = var.password
+
+  depends_on = [google_sql_database_instance.main]
+}

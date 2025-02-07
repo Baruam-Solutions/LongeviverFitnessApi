@@ -1,7 +1,7 @@
 variable "project_id" {
   description = "Id do projeto na cloud"
   type        = string
-  default     = "longeviverfitness"
+  default     = "longeviver-dev-franciel"
 }
 
 variable "project_region" {

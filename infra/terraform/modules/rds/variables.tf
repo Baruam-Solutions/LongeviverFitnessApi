@@ -40,3 +40,10 @@ variable "id_project" {
   description = "Id do projeto na cloud"
   type        = string
 }
+
+# TODO - Usando para teste
+variable "password" {
+  description = "Senha do usuário administrador postgres"
+  type        = string
+  sensitive   = true
+}

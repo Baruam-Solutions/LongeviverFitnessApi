@@ -47,8 +47,11 @@ Comandos principais para gerenciar o ambiente Kubernetes com kubectl:
     * `kubectl get pods`
     * `kubectl get deployment`
     * `kubectl get service`
-* Ver logs dos pod:
+    * `kubectl get replicaset`
+* Ver logs dos k8s:
     * `kubectl logs nome-do-pod`
+    * `kubectl describe pod nome-do-pod`
+    * `kubectl describe replicaset nome-do-replicaset`
 * Criar um túnel temporário entre o seu computador e o pod
     * `kubectl port-forward service/longeviver-fitness-app 8080:8080`
 * Mais comandos
