@@ -75,7 +75,7 @@ resource "google_project_iam_member" "client_cloud_sql" {
 # TODO - Usando para teste
 # cria um usuário para acessar o sql
 resource "google_sql_user" "postgres_user" {
-  name     = "postgres"
+  name     = var.username
   instance = google_sql_database_instance.main.name
   password = var.password
 

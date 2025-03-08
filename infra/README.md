@@ -13,6 +13,19 @@ Instale o terraform:
 * windows: `choco install terraform`
 * linux: `sudo apt-get install terraform`
 
+// todo: verificar comando. foi incluido por sugestão do copilot
+
+Instale o gcloud:
+* windows: `choco install google-cloud-sdk` 
+* linux: `sudo apt-get install google-cloud-sdk`
+
+Instale o kubectl:
+* windows: `choco install kubernetes-cli`
+* linux: `sudo apt-get install kubectl`
+
+Instale o gke-gcloud-auth-plugin: 
+* `gcloud components install gke-gcloud-auth-plugin`
+
 No diretorio do arquivo `main.tf`, apenas na primeira vez para criar o arquivo necessário, execute o comando: `terraform init`.
 
 Caso tenha sido realizado alguma alteração nos recursos, para atualiza-los, utilize: `terraform init -upgrade`

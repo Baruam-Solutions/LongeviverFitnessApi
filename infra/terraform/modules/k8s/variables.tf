@@ -25,18 +25,6 @@ variable "initial_node_count" {
   default     = 2
 }
 
-variable "artifact_region" {
-  description = "Região do Artifact Registry"
-  type        = string
-  default     = "southamerica-east1"
-}
-
-variable "artifact_repository_name" {
-  description = "Nome do repositório do Artifact Registry"
-  type        = string
-  default     = "longeviverfitness-repositorio"
-}
-
 variable "name_node_pool" {
   description = "Nome do Node Pool"
   type        = string
@@ -47,3 +35,18 @@ variable "preemptible" {
   type        = bool
 }
 
+variable "database" {
+    description = "Nome da base de dados para o projeto"
+    type        = string
+}
+
+variable username {
+    description = "Nome do usuário da base de dados"
+    type        = string
+}
+
+variable "password" {
+    description = "Senha do usuário da base de dados"
+    type        = string
+    sensitive   = true
+}

@@ -1,3 +1,10 @@
+/*
+      Dedicado para GKE
+*/
+data "google_project" "project" {
+  project_id = var.id_project
+}
+
 # Cria uma Service Account que será utilizada pelos nós do Kubernetes
 resource "google_service_account" "service_account_k8s" {
   account_id   = "k8s-service-account"
@@ -11,13 +18,6 @@ resource "google_project_service" "kubernetes_api" {
   disable_on_destroy = false
 }
 
-# Habilita o serviço Cloud Build API no projeto
-resource "google_project_service" "cloud_build" {
-  project            = var.id_project
-  service            = "cloudbuild.googleapis.com"
-  disable_on_destroy = false
-}
-
 # Cria um cluster Kubernetes no GKE
 resource "google_container_cluster" "primary" {
   depends_on = [google_project_service.kubernetes_api]
@@ -25,6 +25,10 @@ resource "google_container_cluster" "primary" {
   location                 = var.cluster_location
   remove_default_node_pool = true
   initial_node_count       = var.initial_node_count
+  workload_identity_config {
+    workload_pool = "${var.id_project}.svc.id.goog"
+  }
+  deletion_protection      = false
 }
 
 # Cria um Node Pool personalizado para o cluster Kubernetes
@@ -39,62 +43,84 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     preemptible     = var.preemptible
     machine_type    = var.node_machine_type
     service_account = google_service_account.service_account_k8s.email
-    oauth_scopes = [
+    oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
+    workload_metadata_config {
+        mode        = "GKE_METADATA"
+    }
   }
 }
 
-# Cria um repositório Docker para o projeto
-resource "google_artifact_registry_repository" "docker_repo" {
-  provider      = google
-  depends_on = [google_project_service.cloud_build]
-  project       = var.id_project
-  repository_id = var.artifact_repository_name
-  location      = var.artifact_region
-  format        = "DOCKER"
-  description   = "Repositório Docker para o projeto Longeviver Fitness"
-}
+
 
 # Concede permissões à Service Account
-resource "google_project_iam_member" "artifact_registry_admin" {
+resource "google_project_iam_member" "cloud_sql_client_role" {
   depends_on = [google_service_account.service_account_k8s]
   project = var.id_project
-  role    = "roles/artifactregistry.admin"
+  role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_service_account.service_account_k8s.email}"
 }
 
-resource "google_project_iam_member" "cloud_run_admin" {
+#utilizado pelo app para registrar logs
+resource "google_project_iam_member" "logging_writer_role" {
   depends_on = [google_service_account.service_account_k8s]
   project = var.id_project
-  role    = "roles/run.admin"
+  role    = "roles/logging.logWriter"
   member  = "serviceAccount:${google_service_account.service_account_k8s.email}"
 }
 
-resource "google_project_iam_member" "cloud_run_builder" {
+resource "google_project_iam_member" "artifact_registry_reader" {
   depends_on = [google_service_account.service_account_k8s]
   project = var.id_project
-  role    = "roles/run.builder"
+  role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.service_account_k8s.email}"
 }
 
-resource "google_project_iam_member" "kubernetes_engine_admin" {
-  depends_on = [google_service_account.service_account_k8s]
+resource "google_project_iam_member" "cluster_viewer_role" {
+  depends_on = [google_service_account.service_account_k8s, kubernetes_namespace.cluster_namespace, kubernetes_service_account.ksa]
   project = var.id_project
-  role    = "roles/container.admin"
-  member  = "serviceAccount:${google_service_account.service_account_k8s.email}"
+  role    = "roles/container.clusterViewer"
+  member  = "principal://iam.googleapis.com/projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${var.id_project}.svc.id.goog/subject/ns/${kubernetes_namespace.cluster_namespace.metadata.0.name}/sa/${kubernetes_service_account.ksa.metadata.0.name}"
 }
 
-resource "google_project_iam_member" "service_account_user" {
-  depends_on = [google_service_account.service_account_k8s]
-  project = var.id_project
-  role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:${google_service_account.service_account_k8s.email}"
+resource "google_service_account_iam_member" "workload_identity_user_role" {
+  depends_on         = [google_service_account.service_account_k8s, kubernetes_namespace.cluster_namespace, kubernetes_service_account.ksa]
+  service_account_id = google_service_account.service_account_k8s.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${var.id_project}.svc.id.goog[${kubernetes_namespace.cluster_namespace.metadata.0.name}/${kubernetes_service_account.ksa.metadata.0.name}]"
 }
 
-resource "google_project_iam_member" "storage_admin" {
-  depends_on = [google_service_account.service_account_k8s]
-  project = var.id_project
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.service_account_k8s.email}"
+/*
+      Dedicado para Kubernetes
+*/
+
+resource "kubernetes_namespace" "cluster_namespace" {
+  depends_on = [google_container_cluster.primary]
+  metadata {
+    name = "${var.id_project}-namespace"
+  }
+}
+
+resource "kubernetes_service_account" "ksa" {
+  depends_on = [kubernetes_namespace.cluster_namespace, google_service_account.service_account_k8s]
+  metadata {
+    name = "${var.id_project}-ksa"
+    namespace = kubernetes_namespace.cluster_namespace.metadata.0.name
+    annotations = {
+      "iam.gke.io/gcp-service-account" = google_service_account.service_account_k8s.email
+    }
+  }
+}
+
+resource "kubernetes_secret" "gke-cloud-sql-secrets" {
+  metadata {
+    name = "gke-cloud-sql-secrets"
+    namespace = kubernetes_namespace.cluster_namespace.metadata.0.name
+  }
+  data = {
+    database = var.database
+    username = var.username
+    password = var.password
+  }
 }
