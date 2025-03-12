@@ -13,6 +13,19 @@ Instale o terraform:
 * windows: `choco install terraform`
 * linux: `sudo apt-get install terraform`
 
+// todo: verificar comando. foi incluido por sugestão do copilot
+
+Instale o gcloud:
+* windows: `choco install google-cloud-sdk` 
+* linux: `sudo apt-get install google-cloud-sdk`
+
+Instale o kubectl:
+* windows: `choco install kubernetes-cli`
+* linux: `sudo apt-get install kubectl`
+
+Instale o gke-gcloud-auth-plugin: 
+* `gcloud components install gke-gcloud-auth-plugin`
+
 No diretorio do arquivo `main.tf`, apenas na primeira vez para criar o arquivo necessário, execute o comando: `terraform init`.
 
 Caso tenha sido realizado alguma alteração nos recursos, para atualiza-los, utilize: `terraform init -upgrade`
@@ -63,5 +76,16 @@ Módulo para Configuração do PostgreSQL.
 ### terraform/main.tf - Arquivo Principal
 
 O `main.tf` na raiz conecta os módulos e define o ambiente padrão a ser provisionado.
+
+## GCP
+
+Para realizar a implantação dos recursos na núvem, é necessário ter o CLI do GCP instalado e devidamente autenticado na conta Google.
+
+* [Instalar a CLI gcloud](https://cloud.google.com/sdk/docs/install?hl=pt-br)
+* [Autorizar a CLI gcloud](https://cloud.google.com/sdk/docs/install?hl=pt-br)
+* [Configuração de autenticação da gcloud CLI e configuração do ADC](https://cloud.google.com/docs/authentication/gcloud?hl=pt-br#gcloud-credentials)
+* [Como definir propriedades de configuração](https://cloud.google.com/sdk/docs/configurations?hl=pt-br#setting_configuration_properties)
+
+
 
 
