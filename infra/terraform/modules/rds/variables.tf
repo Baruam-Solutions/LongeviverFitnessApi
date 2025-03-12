@@ -1,7 +1,7 @@
 variable "instance_name" {
   description = "Nome da instância do Cloud SQL"
   type        = string
-  default     = "longevivier"
+  default     = "longeviver"
 }
 
 variable "database_version" {
@@ -38,5 +38,17 @@ variable "deletion_protection" {
 
 variable "id_project" {
   description = "Id do projeto na cloud"
+  type        = string
+}
+
+# TODO - Usando para teste
+variable "password" {
+  description = "Senha do usuário administrador postgres"
+  type        = string
+  sensitive   = true
+}
+
+variable "username" {
+  description = "Nome do usuário administrador postgres"
   type        = string
 }

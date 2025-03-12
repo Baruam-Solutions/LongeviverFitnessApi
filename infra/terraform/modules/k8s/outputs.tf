@@ -6,6 +6,6 @@ output "kubernetes_endpoint" {
   value = google_container_cluster.primary.endpoint
 }
 
-output "artifact_registry_repository" {
-  value = google_artifact_registry_repository.docker_repo.name
+output "cluster_ca_certificate" {
+  value = google_container_cluster.primary.master_auth[0].cluster_ca_certificate
 }

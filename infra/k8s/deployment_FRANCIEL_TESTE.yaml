@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gke-cloud-sql-quickstart
+  name: longeviver-fitness-app-teste-um
 spec:
   selector:
     matchLabels:
@@ -11,17 +11,17 @@ spec:
       labels:
         app: gke-cloud-sql-app
     spec:
-      serviceAccountName: ksa-cloud-sql
+      serviceAccountName: longeviverfitness-service-account-sql
       containers:
         - name: gke-cloud-sql-app
-          image: us-central1-docker.pkg.dev/longeviver-dev-franciel/gke-cloud-sql-repo/gke-sql:latest
+          image: southamerica-east1-docker.pkg.dev/longeviver-dev-franciel/longeviverfitness-repositorio:latest
           ports:
             - containerPort: 8080
           env:
             - name: PORT
               value: "8080"
             - name: INSTANCE_CONNECTION_NAME
-              value: <INSTANCE_CONNECTION_NAME>
+              value: longeviver-dev-franciel:us-central1:longeviverdev
             - name: DB_HOST
               value: "127.0.0.1"
             - name: DB_PORT
@@ -29,15 +29,15 @@ spec:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: gke-cloud-sql-secrets
+                  name: db-secret
                   key: username
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: gke-cloud-sql-secrets
+                  name: db-secret
                   key: password
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: gke-cloud-sql-secrets
+                  name: db-secret
                   key: database
