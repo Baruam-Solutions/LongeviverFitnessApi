@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write     # necessário para OIDC funcionar
+  contents: read      # necessário para acessar o repositório
+
 jobs:
   authenticate:
     runs-on: ubuntu-latest
