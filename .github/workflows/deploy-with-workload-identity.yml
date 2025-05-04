@@ -5,13 +5,13 @@ on:
   push:
     branches:
       - main
-# Ativa o uso de OIDC no workflow do GitHub Actions
+
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  authenticate:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,9 +34,9 @@ jobs:
       # Build da imagem Docker
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviver-api:latest 
+          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest 
 
       # Push da imagem Docker
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviver-api:latest
+          docker push ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest
