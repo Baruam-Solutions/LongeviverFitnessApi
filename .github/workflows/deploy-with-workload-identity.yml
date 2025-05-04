@@ -35,19 +35,22 @@ jobs:
         run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
       # Build da imagem Docker
-      - name: Build Docker image
-        run: |
-          docker build -t us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest .
+#      - name: Build Docker image
+#        run: |
+#          docker build -t us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest .
 
       # Push da imagem Docker
-      - name: Push Docker image
-        run: |
-          docker push us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
+#      - name: Push Docker image
+#        run: |
+#          docker push us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.9.8
+
+      - name: List files for debug
+        run: ls -R
 
       - name: Terraform Init
         run: terraform init
