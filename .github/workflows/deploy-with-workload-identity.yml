@@ -50,10 +50,6 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
 
-      - name: Set up GKE credentials
-        run: |
-          gcloud container clusters get-credentials $GKE_CLUSTER_NAME --zone $GKE_CLUSTER_ZONE --project $GCP_PROJECT_ID
-
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
