@@ -56,3 +56,9 @@ resource "google_project_iam_member" "github_sa_project_viewer" {
   role    = "roles/viewer"
   member  = "serviceAccount:${google_service_account.github_actions.email}"
 }
+
+resource "google_storage_bucket_iam_member" "terraform_backend_writer" {
+  bucket = var.terraform_state_bucket_name
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${google_service_account.github_actions.email}"
+}

@@ -39,4 +39,5 @@ module "git_actions" {
   github_repo = "Baruam-Solutions/LongeviverFitnessApi"
   artifact_registry_repository_name = module.artifact_repository.artifact_repository_name
   artifact_registry_repository_region = var.project_region
+  terraform_state_bucket_name = var.terraform_state_bucket_name
 }

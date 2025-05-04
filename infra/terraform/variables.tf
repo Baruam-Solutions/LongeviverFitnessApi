@@ -15,3 +15,9 @@ variable "project_zone" {
   type        = string
   default     = "us-central1-c"
 }
+
+variable "terraform_state_bucket_name" {
+  description = "Nome do bucket para armazenar o terraform state"
+  type        = string
+  default     = "lgv_terraform_state_bucket_mateus"
+}
