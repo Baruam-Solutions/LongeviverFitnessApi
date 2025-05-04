@@ -43,6 +43,7 @@ resource "google_service_account_iam_binding" "allow_github_oidc" {
   ]
 }
 
+# IAM para o GitHub Actions permissão de escrita no Artifact Registry
 resource "google_artifact_registry_repository_iam_member" "artifact_registry_writer" {
   location   = var.artifact_registry_repository_region
   repository = var.artifact_registry_repository_name
@@ -51,14 +52,16 @@ resource "google_artifact_registry_repository_iam_member" "artifact_registry_wri
   member     = "serviceAccount:${google_service_account.github_actions.email}"
 }
 
+# IAM para o GitHub Actions permissão de leitura geral em todos os recursos de um projeto
 resource "google_project_iam_member" "github_sa_project_viewer" {
   project = var.id_project
   role    = "roles/viewer"
   member  = "serviceAccount:${google_service_account.github_actions.email}"
 }
 
-resource "google_storage_bucket_iam_member" "terraform_backend_writer" {
+# IAM para o GitHub Actions permissão de leitura no bucket para o Terraform State
+resource "google_storage_bucket_iam_member" "terraform_backend_writer_reader" {
   bucket = var.terraform_state_bucket_name
-  role   = "roles/storage.objectAdmin"
+  role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.github_actions.email}"
 }
