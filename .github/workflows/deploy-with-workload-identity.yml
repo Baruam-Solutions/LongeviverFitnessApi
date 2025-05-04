@@ -1,0 +1,20 @@
+#https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions
+name: Deploy to Google Kubernetes Engine
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  authenticate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.0'
+        with:
+          workload_identity_provider: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool'
+          service_account: 'github-actions-sa@longeviver-dev-mateus-455600.iam.gserviceaccount.com'
+
