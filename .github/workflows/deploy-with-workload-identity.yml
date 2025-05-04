@@ -27,7 +27,7 @@ jobs:
         with:
           workload_identity_provider: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool'
           service_account: 'github-actions-sa@longeviver-dev-mateus-455600.iam.gserviceaccount.com'
-          audience: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool'
+          audience: 'https://iam.googleapis.com/projects/400595761684/locations/global/workloadIdentityPools/githubpool'
 
       # Configurar Docker para usar gcloud como helper de credenciais
       - name: Configure Docker with Artifact Registry
