@@ -36,9 +36,9 @@ jobs:
       # Build da imagem Docker
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest .
+          docker build -t southamerica-east1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest .
 
       # Push da imagem Docker
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest
+          docker push southamerica-east1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
