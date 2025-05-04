@@ -6,15 +6,16 @@ on:
     branches:
       - main
 
-permissions:
-  id-token: write     # necessário para OIDC funcionar
-  contents: read      # necessário para acessar o repositório
-
 jobs:
   authenticate:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout do código
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.4.0'
@@ -22,3 +23,16 @@ jobs:
           workload_identity_provider: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool'
           service_account: 'github-actions-sa@longeviver-dev-mateus-455600.iam.gserviceaccount.com'
 
+      # Configurar Docker para usar gcloud como helper de credenciais
+      - name: Configure Docker with Artifact Registry
+        run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev
+
+      # Build da imagem Docker
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviver-api:latest 
+
+      # Push da imagem Docker
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviver-api:latest
