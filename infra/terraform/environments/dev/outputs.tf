@@ -19,7 +19,6 @@ output "pool_name" {
   value = module.git_actions.pool_name
 }
 
-
 output "github_actions_service_account_email" {
   value = module.git_actions.github_actions_service_account_email
 }

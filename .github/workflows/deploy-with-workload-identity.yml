@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - feature/BARUAM-24
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
@@ -42,3 +43,24 @@ jobs:
       - name: Push Docker image
         run: |
           docker push us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: infra/
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: infra/
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        working-directory: infra/
+
+#      - name: Terraform Apply
+#        run: terraform apply -auto-approve tfplan
+#        working-directory: infra/
