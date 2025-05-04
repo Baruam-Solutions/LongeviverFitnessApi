@@ -5,6 +5,10 @@ on:
   push:
     branches:
       - main
+# Ativa o uso de OIDC no workflow do GitHub Actions
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   authenticate:
