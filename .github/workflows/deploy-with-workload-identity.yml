@@ -6,6 +6,7 @@ on:
     branches:
       - main
 
+# Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
   id-token: write
   contents: read
@@ -26,6 +27,7 @@ jobs:
         with:
           workload_identity_provider: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool'
           service_account: 'github-actions-sa@longeviver-dev-mateus-455600.iam.gserviceaccount.com'
+          audience: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool'
 
       # Configurar Docker para usar gcloud como helper de credenciais
       - name: Configure Docker with Artifact Registry
