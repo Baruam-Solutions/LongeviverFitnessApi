@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class OpenApiConfig {
 
-
     @Bean
     fun customOpenAPI(): OpenAPI {
         return OpenAPI()
@@ -38,8 +37,9 @@ class OpenApiConfig {
             )
             .servers(
                 listOf(
-                    Server().url("http://localhost:8080").description("Ambiente de desenvolvimento"),
-                    Server().url("https://api.longeviver.com").description("Ambiente de produção")
+                    Server().url("http://34.29.1.1").description("GKE Service"),
+                    Server().url("http://localhost:8080").description("Localhost"),
+                    Server().url("longeviver-gke").description("Nome service do GKE")
                 )
             )
             .addTagsItem(Tag().name("Usuário").description("Operações relacionadas aos usuários do sistema"))

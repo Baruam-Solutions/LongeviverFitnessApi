@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: longeviver-gke
+  namespace: longeviver-dev-mateus-455600-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: longeviver-gke
+  template:
+    metadata:
+      annotations:
+        iam.gke.io/gcp-service-account: k8s-service-account@longeviver-dev-mateus-455600.iam.gserviceaccount.com
+      labels:
+        app: longeviver-gke
+    spec:
+      serviceAccountName: longeviver-dev-mateus-455600-ksa
+      containers:
+        - name: longeviver-gke
+          image: us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:v100
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: artifact-registry-secret

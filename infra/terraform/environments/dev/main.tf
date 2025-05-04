@@ -27,8 +27,16 @@ module "k8s" {
 }
 
 module "artifact_repository" {
-  source                = "../../modules/artifact_repository"
-  id_project            = var.project_id
-  artifact_region       = var.project_region
+  source                   = "../../modules/artifact_repository"
+  id_project               = var.project_id
+  artifact_region          = var.project_region
   artifact_repository_name = "longeviverfitness-repositorio"
+}
+
+module "git_actions" {
+  source = "../../modules/git_actions"
+  id_project = var.project_id
+  github_repo = "Baruam-Solutions/LongeviverFitnessApi"
+  artifact_registry_repository_name = module.artifact_repository.artifact_repository_name
+  artifact_registry_repository_region = var.project_region
 }
