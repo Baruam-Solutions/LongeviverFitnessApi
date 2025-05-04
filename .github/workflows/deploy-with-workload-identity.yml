@@ -25,9 +25,9 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.4.0'
         with:
-          workload_identity_provider: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool'
+          workload_identity_provider: 'projects/400595761684/locations/global/workloadIdentityPools/githubpool/providers/github-provider'
           service_account: 'github-actions-sa@longeviver-dev-mateus-455600.iam.gserviceaccount.com'
-          audience: 'https://iam.googleapis.com/projects/400595761684/locations/global/workloadIdentityPools/githubpool'
+          audience: 'https://iam.googleapis.com/projects/400595761684/locations/global/workloadIdentityPools/githubpool/providers/github-provider'
 
       # Configurar Docker para usar gcloud como helper de credenciais
       - name: Configure Docker with Artifact Registry
