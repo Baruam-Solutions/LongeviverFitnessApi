@@ -31,14 +31,14 @@ jobs:
 
       # Configurar Docker para usar gcloud como helper de credenciais
       - name: Configure Docker with Artifact Registry
-        run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
       # Build da imagem Docker
       - name: Build Docker image
         run: |
-          docker build -t southamerica-east1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest .
+          docker build -t us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest .
 
       # Push da imagem Docker
       - name: Push Docker image
         run: |
-          docker push southamerica-east1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
+          docker push us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
