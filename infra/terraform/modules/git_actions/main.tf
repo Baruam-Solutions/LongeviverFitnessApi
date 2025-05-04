@@ -50,3 +50,9 @@ resource "google_artifact_registry_repository_iam_member" "artifact_registry_wri
   role       = "roles/artifactregistry.writer"
   member     = "serviceAccount:${google_service_account.github_actions.email}"
 }
+
+resource "google_project_iam_member" "github_sa_project_viewer" {
+  project = var.id_project
+  role    = "roles/viewer"
+  member  = "serviceAccount:${google_service_account.github_actions.email}"
+}

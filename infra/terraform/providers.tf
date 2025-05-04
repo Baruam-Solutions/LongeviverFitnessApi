@@ -18,14 +18,14 @@ provider "google" {
 
 data "google_client_config" "provider" {}
 
-provider "kubernetes" {
-  host                   = "https://${module.dev_rds.kubernetes_endpoint}"
-  token                  = data.google_client_config.provider.access_token
-  cluster_ca_certificate = base64decode(
-    module.dev_rds.kubernetes_cluster_ca_certificate
-  )
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "gke-gcloud-auth-plugin"
-  }
-}
+# provider "kubernetes" {
+#   host                   = "https://${module.dev_rds.kubernetes_endpoint}"
+#   token                  = data.google_client_config.provider.access_token
+#   cluster_ca_certificate = base64decode(
+#     module.dev_rds.kubernetes_cluster_ca_certificate
+#   )
+#   exec {
+#     api_version = "client.authentication.k8s.io/v1beta1"
+#     command     = "gke-gcloud-auth-plugin"
+#   }
+# }

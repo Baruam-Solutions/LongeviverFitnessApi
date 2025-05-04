@@ -3,10 +3,10 @@ output "bucket_name_from_module" {
   description = "Nome do cloud storage bucket para armazenar terraform state"
 }
 
-output "db_instance_connection_name_from_module" {
-  value = module.dev_rds.db_instance_connection_name_from_module
-  description = "Nome da conexão da instância da database"
-}
+# output "db_instance_connection_name_from_module" {
+#   value = module.dev_env.db_instance_connection_name_from_module
+#   description = "Nome da conexão da instância da database"
+# }
 
 output "pool_name" {
   value = module.dev_rds.pool_name

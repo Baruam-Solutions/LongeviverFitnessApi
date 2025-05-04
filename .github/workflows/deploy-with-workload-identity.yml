@@ -13,7 +13,10 @@ permissions:
   contents: read
 
 env:
-  TF_WORKDIR: infra/terraform/
+  TF_WORKDIR:       infra/terraform/
+  GKE_CLUSTER_NAME: longeviverfitness-cluster
+  GKE_CLUSTER_ZONE: us-central1-c
+  GCP_PROJECT_ID:   longeviver-dev-mateus-455600
 
 jobs:
   deploy:
@@ -47,6 +50,10 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:latest
 
+      - name: Set up GKE credentials
+        run: |
+          gcloud container clusters get-credentials $GKE_CLUSTER_NAME --zone $GKE_CLUSTER_ZONE --project $GCP_PROJECT_ID
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -67,6 +74,7 @@ jobs:
           cd $TF_WORKDIR
           terraform plan -out=tfplan
 
-#      - name: Terraform Apply
-#        run: terraform apply -auto-approve tfplan
-#        working-directory: infra/
+      - name: Terraform Apply
+        run: |
+          cd $TF_WORKDIR
+          terraform apply -auto-approve tfplan
