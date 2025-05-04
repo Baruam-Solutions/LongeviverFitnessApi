@@ -34,7 +34,7 @@ jobs:
       # Build da imagem Docker
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest 
+          docker build -t ${{ secrets.GKE_CONTAINER_REGISTRY }}/longeviverfitness:latest .
 
       # Push da imagem Docker
       - name: Push Docker image
