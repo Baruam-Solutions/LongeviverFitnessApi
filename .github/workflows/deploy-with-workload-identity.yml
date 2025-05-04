@@ -1,5 +1,5 @@
 #https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions
-name: Deploy to Google Kubernetes Engine
+name: Deploy to Google Kubernetes Engine with Workload Identity Federation
 
 on:
   push:
