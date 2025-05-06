@@ -34,14 +34,27 @@ Comandos úteis para criar e gerenciar o ambiente Docker:
   * Autentique seu Docker para permitir o push da imagem
     * `gcloud auth configure-docker us-central1-docker.pkg.dev`
   * Taggear a Imagem para Enviar ao Artifact Registry
-    * `docker tag longeviverfitness:v1 us-central1-docker.pkg.dev/[SEU_PROJETO_ID]/[NOME_DO_BUCKET]/longeviverfitness:v1`
+    * `docker tag longeviverfitness:v1 us-central1-docker.pkg.dev/[SEU_PROJETO_ID]/[NOME_DO_ARTIFACT_REGISTRY/longeviverfitness:v1`
   * Push para o Google Cloud
-    * `docker push us-central1-docker.pkg.dev/[SEU_PROJETO_ID]/[NOME_DO_BUCKET]/longeviverfitness:v1`
+    * `docker push us-central1-docker.pkg.dev/[SEU_PROJETO_ID]/[NOME_DO_ARTIFACT_REGISTRY]/longeviverfitness:v1`
+
+Comandos uteis para Docker:
+
+  * Listar imagens
+    * `docker image list`
+  * Deletar imagem
+    * `docker rmi -f nome-da-imagem`
+  * Listar containers
+    * `docker ps -a`
+  * Deletar container
+    * `docker rm nome-do-container`
 
 ## Kubectl
 
 Comandos principais para gerenciar o ambiente Kubernetes com kubectl:
 
+* Buscar todos os namepaces:
+  * `kubectl get namespaces`
 * Criar pod deployment e service:
     * `kubectl apply -f pod.yaml`
     * `kubectl apply -f deployment.yaml`
@@ -68,7 +81,7 @@ Comandos principais para gerenciar o ambiente Kubernetes com kubectl:
 
 Comandos para gerenciar clusters Kubernetes com Kind:
 
-* Criar/Deletar cluster do kind: 
+* Criar/Deletar cluster do kind:
   * `kind create cluster`
   * `kind delete cluster`
 * Verificar se o kind-control-plane está em execução:
