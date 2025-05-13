@@ -42,3 +42,8 @@ src/main/resources/app.pub
 /infra/terraform/terraform.tfstate
 /infra/terraform/.terraform/
 /infra/terraform/terraform.tfstate.backup
+/infra/terraform/bootstrap/bootstrap.tfvars
+/infra/terraform/bootstrap/.terraform.lock.hcl
+/infra/terraform/bootstrap/terraform.tfstate
+/infra/terraform/bootstrap/terraform.tfstate.backup
+/infra/terraform/bootstrap/.terraform/
