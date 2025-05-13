@@ -1,7 +1,7 @@
 # Bucket onde é salvo o estado do terraform remotamente
 module "terraform_bootstrap_state_storage" {
   source                      = "./modules/state_bucket"
-  terraform_state_bucket_name = var.BOOTSTRAP_STATE_BUCKET_NAME
+  terraform_state_bucket_name = "lgv-terraform-bootstrap-state-mateus"
 }
 
 # Artifact Registry Repository para armazenar as imagens docker

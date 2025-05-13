@@ -13,11 +13,6 @@ variable "PROJECT_ZONE" {
   type        = string
 }
 
-variable "BOOTSTRAP_STATE_BUCKET_NAME" {
-  description = "Nome do cloud storage bucket para armazenar terraform state para o bootstrap"
-  type        = string
-}
-
 variable "ARTIFACT_REGISTRY_REPOSITORY_NAME" {
   description = "Nome do repositório do Artifact Registry"
   type        = string
