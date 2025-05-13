@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - feature/BARUAM-24
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
