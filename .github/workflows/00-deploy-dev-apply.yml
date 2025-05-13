@@ -6,6 +6,10 @@ on:
       - main
       - feature/BARUAM-24
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   bootstrap:
     uses: ./.github/workflows/01-bootstrap-apply.yml
