@@ -3,10 +3,7 @@ name: Workflow para a camada de bootstrap
 # Deve ser acionado a primeira vez de forma manual, e depois disso, deve ser acionado automaticamente quando houver um push na branch main.
 
 on:
-  push:
-    branches:
-      - main
-      - feature/BARUAM-24
+  workflow_call:
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:

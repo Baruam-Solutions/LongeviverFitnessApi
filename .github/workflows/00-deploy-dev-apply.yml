@@ -1,0 +1,15 @@
+name: Deploy completo
+
+on:
+  push:
+    branches:
+      - main
+      - feature/BARUAM-24
+
+jobs:
+  bootstrap:
+    uses: ./.github/workflows/01-bootstrap-apply.yml
+
+  infra:
+    needs: bootstrap
+    uses: ./.github/workflows/02-infra-dev-apply.yml
