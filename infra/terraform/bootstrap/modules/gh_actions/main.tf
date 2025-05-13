@@ -6,23 +6,23 @@ resource "google_service_account" "github_actions" {
 
 # Workload Identity Pool para o GitHub Actions
 resource "google_iam_workload_identity_pool" "github_pool" {
-  project      = var.project_id
-  workload_identity_pool_id = "ghpool"
-  display_name = "GitHub Actions Pool"
+  project                   = var.project_id
+  workload_identity_pool_id = var.gh_pool
+  display_name              = "GitHub Actions Pool"
 }
 
 # Workload Identity Provider para o GitHub Actions
 resource "google_iam_workload_identity_pool_provider" "github_provider" {
-  project       = var.project_id
-  workload_identity_pool_id = google_iam_workload_identity_pool.github_pool.workload_identity_pool_id
-  workload_identity_pool_provider_id = "github-provider"
+  project                            = var.project_id
+  workload_identity_pool_id          = google_iam_workload_identity_pool.github_pool.workload_identity_pool_id
+  workload_identity_pool_provider_id = var.gh_provider
 
   display_name = "GitHub Actions Provider"
   description  = "Federated identity for GitHub Actions"
 
   attribute_mapping = {
-    "google.subject"        = "assertion.sub"
-    "attribute.repository"  = "assertion.repository"
+    "google.subject"       = "assertion.sub"
+    "attribute.repository" = "assertion.repository"
   }
 
   attribute_condition = "attribute.repository == '${var.github_repo}'"
@@ -34,7 +34,7 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
 
 # Permitir que o repositório GitHub use a Service Account
 resource "google_service_account_iam_binding" "allow_github_oidc" {
-  depends_on = [google_iam_workload_identity_pool_provider.github_provider]
+  depends_on         = [google_iam_workload_identity_pool_provider.github_provider]
   service_account_id = google_service_account.github_actions.name
   role               = "roles/iam.workloadIdentityUser"
 

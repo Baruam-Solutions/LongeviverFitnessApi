@@ -27,3 +27,13 @@ variable "GITHUB_REPO" {
   description = "Nome do repositório no GitHub"
   type        = string
 }
+
+variable "GITHUB_POOL" {
+  description = "Nome do pool do GitHub Actions"
+  type        = string
+}
+
+variable "GITHUB_PROVIDER" {
+  description = "Nome do provider do GitHub"
+  type        = string
+}
