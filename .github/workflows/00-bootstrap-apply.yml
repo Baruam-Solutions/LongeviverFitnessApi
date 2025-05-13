@@ -28,7 +28,7 @@ env:
   TF_VAR_GITHUB_PROVIDER:                   github-provider
 
 jobs:
-  deploy:
+  apply-bootstrap:
     runs-on: ubuntu-latest
 
     steps:
