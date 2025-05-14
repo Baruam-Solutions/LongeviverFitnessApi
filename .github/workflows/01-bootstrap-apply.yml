@@ -4,6 +4,37 @@ name: Workflow para a camada de bootstrap
 
 on:
   workflow_call:
+    inputs:
+      TF_WORKDIR:
+        required: true
+        type: string
+      TF_VAR_PROJECT_ID:
+        required: true
+        type: string
+      TF_VAR_PROJECT_NUMBER:
+        required: true
+        type: string
+      TF_VAR_PROJECT_REGION:
+        required: true
+        type: string
+      TF_VAR_PROJECT_ZONE:
+        required: true
+        type: string
+      TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME:
+        required: true
+        type: string
+      TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME:
+        required: true
+        type: string
+      TF_VAR_GITHUB_REPO:
+        required: true
+        type: string
+      TF_VAR_GITHUB_POOL:
+        required: true
+        type: string
+      TF_VAR_GITHUB_PROVIDER:
+        required: true
+        type: string
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:

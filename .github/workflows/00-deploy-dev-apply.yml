@@ -3,7 +3,6 @@ name: Deploy completo
 # Define as variáveis de ambiente necessárias para o Terraform
 # Para ser reconhecido pelo terraform, a variável precisa estar no formato TF_VAR_<nome_da_variável>
 env:
-  TF_WORKDIR:                               infra/terraform/bootstrap/
   TF_VAR_PROJECT_ID:                        longeviver-dev-mateus-455600
   TF_VAR_PROJECT_NUMBER:                    400595761684
   TF_VAR_PROJECT_REGION:                    us-central1
@@ -27,7 +26,24 @@ permissions:
 jobs:
   bootstrap:
     uses: ./.github/workflows/01-bootstrap-apply.yml
+    with:
+      TF_WORKDIR: infra/terraform/bootstrap/
+      TF_VAR_PROJECT_ID: ${{ env.TF_VAR_PROJECT_ID }}
+      TF_VAR_PROJECT_NUMBER: ${{ env.TF_VAR_PROJECT_NUMBER }}
+      TF_VAR_PROJECT_REGION: ${{ env.TF_VAR_PROJECT_REGION }}
+      TF_VAR_PROJECT_ZONE: ${{ env.TF_VAR_PROJECT_ZONE }}
+      TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME: ${{ env.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}
+      TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ env.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      TF_VAR_GITHUB_REPO: ${{ env.TF_VAR_GITHUB_REPO }}
+      TF_VAR_GITHUB_POOL: ${{ env.TF_VAR_GITHUB_POOL }}
+      TF_VAR_GITHUB_PROVIDER: ${{ env.TF_VAR_GITHUB_PROVIDER }}
 
   infra:
     needs: bootstrap
     uses: ./.github/workflows/02-infra-dev-apply.yml
+    with:
+      TF_WORKDIR: infra/terraform/main-resources/
+      TF_VAR_PROJECT_ID: ${{ env.TF_VAR_PROJECT_ID }}
+      TF_VAR_PROJECT_NUMBER: ${{ env.TF_VAR_PROJECT_NUMBER }}
+      TF_VAR_PROJECT_REGION: ${{ env.TF_VAR_PROJECT_REGION }}
+      TF_VAR_PROJECT_ZONE: ${{ env.TF_VAR_PROJECT_ZONE }}

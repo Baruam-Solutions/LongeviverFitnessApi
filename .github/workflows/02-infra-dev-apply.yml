@@ -2,6 +2,22 @@ name: Workflow para a camada infra-dev
 
 on:
   workflow_call:
+    inputs:
+      TF_WORKDIR:
+        required: true
+        type: string
+      TF_VAR_PROJECT_ID:
+        required: true
+        type: string
+      TF_VAR_PROJECT_NUMBER:
+        required: true
+        type: string
+      TF_VAR_PROJECT_REGION:
+        required: true
+        type: string
+      TF_VAR_PROJECT_ZONE:
+        required: true
+        type: string
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
