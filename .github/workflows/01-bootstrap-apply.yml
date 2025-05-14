@@ -74,7 +74,7 @@ jobs:
           terraform validate
 
       - name: Terraform Plan
-        run:  |
+        run: |
           cd $TF_WORKDIR
           terraform plan -out=tfplan
 

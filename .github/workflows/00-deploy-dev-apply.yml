@@ -1,5 +1,15 @@
 name: Deploy completo
 
+on:
+  push:
+    branches:
+      - main
+      - feature/BARUAM-24
+
+permissions:
+  id-token: write
+  contents: read
+
 # Define as variáveis de ambiente necessárias para o Terraform
 # Para ser reconhecido pelo terraform, a variável precisa estar no formato TF_VAR_<nome_da_variável>
 env:
@@ -12,16 +22,6 @@ env:
   TF_VAR_GITHUB_REPO:                       Baruam-Solutions/LongeviverFitnessApi
   TF_VAR_GITHUB_POOL:                       ghpool
   TF_VAR_GITHUB_PROVIDER:                   github-provider
-
-on:
-  push:
-    branches:
-      - main
-      - feature/BARUAM-24
-
-permissions:
-  id-token: write
-  contents: read
 
 jobs:
   bootstrap:
