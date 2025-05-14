@@ -4,12 +4,10 @@ server:
 spring:
   application:
     name: longeviverfitness
-
   datasource:
-    url: jdbc:postgresql://localhost.db:5432/{NomeBanco}?useTimezone=true&serverTimezone=America/Sao_Paulo
-    username: username
-    password: password
-    driver-class-name: org.postgresql.Driver
+  url: ${DB_URL}
+  username: ${DB_USER}
+  password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
@@ -22,6 +20,12 @@ spring:
         jdbc.lob.non_contextual_creation: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  cloud:
+    gcp:
+      sql:
+        instance-connection-name: ${CLOUD_SQL_DB_INSTANCE_CONNECTION_NAME}
+        database-name: ${CLOUD_SQL_DB_NAME}
 
 springdoc:
   api-docs:

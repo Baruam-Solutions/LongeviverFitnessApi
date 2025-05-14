@@ -1,11 +1,7 @@
-output "cluster_name" {
-  value = google_container_cluster.primary.name
+output "cluster_namespace" {
+  value = kubernetes_namespace.cluster_namespace.metadata.name
 }
 
-output "kubernetes_endpoint" {
-  value = google_container_cluster.primary.endpoint
-}
-
-output "cluster_ca_certificate" {
-  value = google_container_cluster.primary.master_auth[0].cluster_ca_certificate
+output "ksa_name" {
+  value = kubernetes_service_account.ksa.metadata.0.name
 }
