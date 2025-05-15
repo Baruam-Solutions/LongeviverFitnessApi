@@ -33,6 +33,6 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.4.0'
         with:
-          workload_identity_provider: 'projects/${{ env.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ env.TF_VAR_GITHUB_POOL }}/providers/${{ env.TF_VAR_GITHUB_PROVIDER }}'
-          service_account: 'github-actions-sa@${{ env.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
-          audience: 'https://iam.googleapis.com/projects/${{ env.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ env.TF_VAR_GITHUB_POOL }}/providers/${{ env.TF_VAR_GITHUB_PROVIDER }}'
+          workload_identity_provider: 'projects/${{ inputs.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.TF_VAR_GITHUB_POOL }}/providers/${{ inputs.TF_VAR_GITHUB_PROVIDER }}'
+          service_account: 'github-actions-sa@${{ inputs.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
+          audience: 'https://iam.googleapis.com/projects/${{ inputs.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.TF_VAR_GITHUB_POOL }}/providers/${{ inputs.TF_VAR_GITHUB_PROVIDER }}'
