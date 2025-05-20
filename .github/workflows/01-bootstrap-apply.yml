@@ -54,11 +54,17 @@ jobs:
           service_account: 'github-actions-sa@${{ inputs.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
           audience: 'https://iam.googleapis.com/projects/${{ inputs.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.TF_VAR_GITHUB_POOL }}/providers/${{ inputs.TF_VAR_GITHUB_PROVIDER }}'
 
-      - name: Test GCS Access
+      - name: Test env variables Access
         run: |
-          gsutil ls gs://lgv-terraform-bootstrap-state-mateus
-          gsutil cp /dev/null gs://lgv-terraform-bootstrap-state-mateus/test.txt
-          gsutil rm gs://lgv-terraform-bootstrap-state-mateus/test.txt
+          echo "TF_VAR_PROJECT_ID=${{ inputs.TF_VAR_PROJECT_ID }}"
+          echo "TF_VAR_PROJECT_NUMBER=${{ inputs.TF_VAR_PROJECT_NUMBER }}"
+          echo "TF_VAR_PROJECT_REGION=${{ inputs.TF_VAR_PROJECT_REGION }}"
+          echo "TF_VAR_PROJECT_ZONE=${{ inputs.TF_VAR_PROJECT_ZONE }}"
+          echo "TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME=${{ inputs.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}"
+          echo "TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ inputs.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}"
+          echo "TF_VAR_GITHUB_REPO=${{ inputs.TF_VAR_GITHUB_REPO }}"
+          echo "TF_VAR_GITHUB_POOL=${{ inputs.TF_VAR_GITHUB_POOL }}"
+          echo "TF_VAR_GITHUB_PROVIDER=${{ inputs.TF_VAR_GITHUB_PROVIDER }}"
 
       # Checkout do código
       - name: Checkout source code
