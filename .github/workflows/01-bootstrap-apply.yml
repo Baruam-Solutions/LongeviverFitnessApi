@@ -41,6 +41,17 @@ permissions:
   id-token: write
   contents: read
 
+env:
+  TF_VAR_PROJECT_ID: ${{ inputs.TF_VAR_PROJECT_ID }}
+  TF_VAR_PROJECT_NUMBER: ${{ inputs.TF_VAR_PROJECT_NUMBER }}
+  TF_VAR_PROJECT_REGION: ${{ inputs.TF_VAR_PROJECT_REGION }}
+  TF_VAR_PROJECT_ZONE: ${{ inputs.TF_VAR_PROJECT_ZONE }}
+  TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME: ${{ inputs.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}
+  TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ inputs.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+  TF_VAR_GITHUB_REPO: ${{ inputs.TF_VAR_GITHUB_REPO }}
+  TF_VAR_GITHUB_POOL: ${{ inputs.TF_VAR_GITHUB_POOL }}
+  TF_VAR_GITHUB_PROVIDER: ${{ inputs.TF_VAR_GITHUB_PROVIDER }}
+
 jobs:
   apply-bootstrap:
     runs-on: ubuntu-latest
@@ -53,19 +64,6 @@ jobs:
           workload_identity_provider: 'projects/${{ inputs.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.TF_VAR_GITHUB_POOL }}/providers/${{ inputs.TF_VAR_GITHUB_PROVIDER }}'
           service_account: 'github-actions-sa@${{ inputs.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
           audience: 'https://iam.googleapis.com/projects/${{ inputs.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.TF_VAR_GITHUB_POOL }}/providers/${{ inputs.TF_VAR_GITHUB_PROVIDER }}'
-
-        # exportando manualmente os ‘inputs’ como variáveis de ambiente
-      - name: Export Terraform environment variables
-        run: |
-          echo "TF_VAR_PROJECT_ID=${{ inputs.TF_VAR_PROJECT_ID }}" >> $GITHUB_ENV
-          echo "TF_VAR_PROJECT_NUMBER=${{ inputs.TF_VAR_PROJECT_NUMBER }}" >> $GITHUB_ENV
-          echo "TF_VAR_PROJECT_REGION=${{ inputs.TF_VAR_PROJECT_REGION }}" >> $GITHUB_ENV
-          echo "TF_VAR_PROJECT_ZONE=${{ inputs.TF_VAR_PROJECT_ZONE }}" >> $GITHUB_ENV
-          echo "TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME=${{ inputs.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}" >> $GITHUB_ENV
-          echo "TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ inputs.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}" >> $GITHUB_ENV
-          echo "TF_VAR_GITHUB_REPO=${{ inputs.TF_VAR_GITHUB_REPO }}" >> $GITHUB_ENV
-          echo "TF_VAR_GITHUB_POOL=${{ inputs.TF_VAR_GITHUB_POOL }}" >> $GITHUB_ENV
-          echo "TF_VAR_GITHUB_PROVIDER=${{ inputs.TF_VAR_GITHUB_PROVIDER }}" >> $GITHUB_ENV
 
       # Checkout do código
       - name: Checkout source code
