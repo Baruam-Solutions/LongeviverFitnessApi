@@ -37,15 +37,15 @@ jobs:
     steps:
       - name: Output Environment Variables
         run: |
-          echo "PROJECT_ID=${{ env.PROJECT_ID }}" >> GITHUB_OUTPUT
-          echo "PROJECT_NUMBER=${{ env.PROJECT_NUMBER }}" >> GITHUB_OUTPUT
-          echo "PROJECT_REGION=${{ env.PROJECT_REGION }}" >> GITHUB_OUTPUT
-          echo "PROJECT_ZONE=${{ env.PROJECT_ZONE }}" >> GITHUB_OUTPUT
-          echo "BOOTSTRAP_STATE_BUCKET_NAME=${{ env.BOOTSTRAP_STATE_BUCKET_NAME }}" >> GITHUB_OUTPUT
-          echo "ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ env.ARTIFACT_REGISTRY_REPOSITORY_NAME }}" >> GITHUB_OUTPUT
-          echo "GITHUB_REPO=${{ env.GITHUB_REPO }}" >> GITHUB_OUTPUT
-          echo "GITHUB_POOL=${{ env.GITHUB_POOL }}" >> GITHUB_OUTPUT
-          echo "GITHUB_PROVIDER=${{ env.GITHUB_PROVIDER }}" >> GITHUB_OUTPUT
+          echo "PROJECT_ID=${{ env.PROJECT_ID }}" >> $GITHUB_OUTPUT
+          echo "PROJECT_NUMBER=${{ env.PROJECT_NUMBER }}" >> $GITHUB_OUTPUT
+          echo "PROJECT_REGION=${{ env.PROJECT_REGION }}" >> $GITHUB_OUTPUT
+          echo "PROJECT_ZONE=${{ env.PROJECT_ZONE }}" >> $GITHUB_OUTPUT
+          echo "BOOTSTRAP_STATE_BUCKET_NAME=${{ env.BOOTSTRAP_STATE_BUCKET_NAME }}" >> $GITHUB_OUTPUT
+          echo "ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ env.ARTIFACT_REGISTRY_REPOSITORY_NAME }}" >> $GITHUB_OUTPUT
+          echo "GITHUB_REPO=${{ env.GITHUB_REPO }}" >> $GITHUB_OUTPUT
+          echo "GITHUB_POOL=${{ env.GITHUB_POOL }}" >> $GITHUB_OUTPUT
+          echo "GITHUB_PROVIDER=${{ env.GITHUB_PROVIDER }}" >> $GITHUB_OUTPUT
 
 #  bootstrap:
 #    needs: export-env
