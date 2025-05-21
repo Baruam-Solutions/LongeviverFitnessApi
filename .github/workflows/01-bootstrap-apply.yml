@@ -67,7 +67,6 @@ jobs:
         with:
           workload_identity_provider: 'projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}'
           service_account: 'github-actions-sa@${{ inputs.PROJECT_ID }}.iam.gserviceaccount.com'
-#          audience: 'https://iam.googleapis.com/projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}'
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
