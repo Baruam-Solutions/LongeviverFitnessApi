@@ -32,6 +32,13 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
+      - name: Debug Workload Identity Provider Inputs
+        run: |
+          echo "PROJECT_NUMBER: ${{ inputs.PROJECT_NUMBER }}"
+          echo "GITHUB_POOL: ${{ inputs.GITHUB_POOL }}"
+          echo "GITHUB_PROVIDER: ${{ inputs.GITHUB_PROVIDER }}"
+          echo "Constructed WIF Provider: projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}"
+
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
