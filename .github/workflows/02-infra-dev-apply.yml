@@ -12,10 +12,10 @@ on:
       PROJECT_NUMBER:
         required: true
         type: string
-      PROJECT_REGION:
+      GITHUB_POOL:
         required: true
         type: string
-      PROJECT_ZONE:
+      GITHUB_PROVIDER:
         required: true
         type: string
 
@@ -32,13 +32,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Debug Workload Identity Provider Inputs
-        run: |
-          echo "PROJECT_NUMBER: ${{ inputs.PROJECT_NUMBER }}"
-          echo "GITHUB_POOL: ${{ inputs.GITHUB_POOL }}"
-          echo "GITHUB_PROVIDER: ${{ inputs.GITHUB_PROVIDER }}"
-          echo "Constructed WIF Provider: projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}"
-
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
@@ -46,4 +39,3 @@ jobs:
         with:
           workload_identity_provider: 'projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}'
           service_account: 'github-actions-sa@${{ inputs.PROJECT_ID }}.iam.gserviceaccount.com'
-#          audience: 'https://iam.googleapis.com/projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}'

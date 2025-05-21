@@ -69,5 +69,5 @@ jobs:
       TF_WORKDIR: infra/terraform/main-resources/
       PROJECT_ID: ${{ needs.export-env.outputs.PROJECT_ID }}
       PROJECT_NUMBER: ${{ needs.export-env.outputs.PROJECT_NUMBER }}
-      PROJECT_REGION: ${{ needs.export-env.outputs.PROJECT_REGION }}
-      PROJECT_ZONE: ${{ needs.export-env.outputs.PROJECT_ZONE }}
+      GITHUB_POOL: ${{ needs.export-env.outputs.GITHUB_POOL }}
+      GITHUB_PROVIDER: ${{ needs.export-env.outputs.GITHUB_PROVIDER }}
