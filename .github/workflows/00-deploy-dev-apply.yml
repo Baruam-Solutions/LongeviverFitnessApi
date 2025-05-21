@@ -14,18 +14,38 @@ jobs:
   export-env:
     name: Export Environment Variables
     runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: longeviver-dev-mateus-455600
+      PROJECT_NUMBER: 400595761684
+      PROJECT_REGION: us-central1
+      PROJECT_ZONE: us-central1-c
+      BOOTSTRAP_STATE_BUCKET_NAME: lgv-terraform-bootstrap-state-mateus
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: longeviver-fitness
+      GITHUB_REPO: Baruam-Solutions/LongeviverFitnessApi
+      GITHUB_POOL: ghpool
+      GITHUB_PROVIDER: github-provider
+    outputs:
+      PROJECT_ID: ${{ env.PROJECT_ID }}
+      PROJECT_NUMBER: ${{ env.PROJECT_NUMBER }}
+      PROJECT_REGION: ${{ env.PROJECT_REGION }}
+      PROJECT_ZONE: ${{ env.PROJECT_ZONE }}
+      BOOTSTRAP_STATE_BUCKET_NAME: ${{ env.BOOTSTRAP_STATE_BUCKET_NAME }}
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ env.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      GITHUB_REPO: ${{ env.GITHUB_REPO }}
+      GITHUB_POOL: ${{ env.GITHUB_POOL }}
+      GITHUB_PROVIDER: ${{ env.GITHUB_PROVIDER }}
     steps:
       - name: Output Environment Variables
         run: |
-          echo "PROJECT_ID=longeviver-dev-mateus-455600" >> GITHUB_OUTPUT
-          echo "PROJECT_NUMBER=400595761684" >> GITHUB_OUTPUT
-          echo "PROJECT_REGION=us-central1" >> GITHUB_OUTPUT
-          echo "PROJECT_ZONE=us-central1-c" >> GITHUB_OUTPUT
-          echo "BOOTSTRAP_STATE_BUCKET_NAME=lgv-terraform-bootstrap-state-mateus" >> GITHUB_OUTPUT
-          echo "ARTIFACT_REGISTRY_REPOSITORY_NAME=longeviver-fitness" >> GITHUB_OUTPUT
-          echo "GITHUB_REPO=Baruam-Solutions/LongeviverFitnessApi" >> GITHUB_OUTPUT
-          echo "GITHUB_POOL=ghpool" >> GITHUB_OUTPUT
-          echo "GITHUB_PROVIDER=github-provider" >> GITHUB_OUTPUT
+          echo "PROJECT_ID=${{ env.PROJECT_ID }}" >> GITHUB_OUTPUT
+          echo "PROJECT_NUMBER=${{ env.PROJECT_NUMBER }}" >> GITHUB_OUTPUT
+          echo "PROJECT_REGION=${{ env.PROJECT_REGION }}" >> GITHUB_OUTPUT
+          echo "PROJECT_ZONE=${{ env.PROJECT_ZONE }}" >> GITHUB_OUTPUT
+          echo "BOOTSTRAP_STATE_BUCKET_NAME=${{ env.BOOTSTRAP_STATE_BUCKET_NAME }}" >> GITHUB_OUTPUT
+          echo "ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ env.ARTIFACT_REGISTRY_REPOSITORY_NAME }}" >> GITHUB_OUTPUT
+          echo "GITHUB_REPO=${{ env.GITHUB_REPO }}" >> GITHUB_OUTPUT
+          echo "GITHUB_POOL=${{ env.GITHUB_POOL }}" >> GITHUB_OUTPUT
+          echo "GITHUB_PROVIDER=${{ env.GITHUB_PROVIDER }}" >> GITHUB_OUTPUT
 
   bootstrap:
     needs: export-env
