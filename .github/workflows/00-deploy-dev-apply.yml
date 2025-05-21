@@ -63,7 +63,7 @@ jobs:
       GITHUB_PROVIDER: ${{ needs.export-env.outputs.GITHUB_PROVIDER }}
 
   infra:
-    needs: bootstrap
+    needs: export-env
     uses: ./.github/workflows/02-infra-dev-apply.yml
     with:
       TF_WORKDIR: infra/terraform/main-resources/
