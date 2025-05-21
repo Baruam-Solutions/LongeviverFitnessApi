@@ -28,6 +28,10 @@ jobs:
   apply-infra-dev:
     runs-on: ubuntu-latest
     steps:
+      # Checkout do código
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
