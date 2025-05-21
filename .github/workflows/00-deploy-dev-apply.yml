@@ -15,59 +15,49 @@ jobs:
     name: Export Environment Variables
     runs-on: ubuntu-latest
     env:
-      TF_VAR_PROJECT_ID:                        longeviver-dev-mateus-455600
-      TF_VAR_PROJECT_NUMBER:                    400595761684
-      TF_VAR_PROJECT_REGION:                    us-central1
-      TF_VAR_PROJECT_ZONE:                      us-central1-c
-      TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME:       lgv-terraform-bootstrap-state-mateus
-      TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: longeviver-fitness
-      TF_VAR_GITHUB_REPO:                       Baruam-Solutions/LongeviverFitnessApi
-      TF_VAR_GITHUB_POOL:                       ghpool
-      TF_VAR_GITHUB_PROVIDER:                   github-provider
-    outputs:
-      TF_VAR_PROJECT_ID: ${{ env.TF_VAR_PROJECT_ID }}
-      TF_VAR_PROJECT_NUMBER: ${{ env.TF_VAR_PROJECT_NUMBER }}
-      TF_VAR_PROJECT_REGION: ${{ env.TF_VAR_PROJECT_REGION }}
-      TF_VAR_PROJECT_ZONE: ${{ env.TF_VAR_PROJECT_ZONE }}
-      TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME: ${{ env.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}
-      TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ env.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-      TF_VAR_GITHUB_REPO: ${{ env.TF_VAR_GITHUB_REPO }}
-      TF_VAR_GITHUB_POOL: ${{ env.TF_VAR_GITHUB_POOL }}
-      TF_VAR_GITHUB_PROVIDER: ${{ env.TF_VAR_GITHUB_PROVIDER }}
+      PROJECT_ID:                        longeviver-dev-mateus-455600
+      PROJECT_NUMBER:                    400595761684
+      PROJECT_REGION:                    us-central1
+      PROJECT_ZONE:                      us-central1-c
+      BOOTSTRAP_STATE_BUCKET_NAME:       lgv-terraform-bootstrap-state-mateus
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: longeviver-fitness
+      GITHUB_REPO:                       Baruam-Solutions/LongeviverFitnessApi
+      GITHUB_POOL:                       ghpool
+      GITHUB_PROVIDER:                   github-provider
     steps:
       - name: Output Environment Variables
         run: |
-          echo "TF_VAR_PROJECT_ID=${{ env.TF_VAR_PROJECT_ID }}"
-          echo "TF_VAR_PROJECT_NUMBER=${{ env.TF_VAR_PROJECT_NUMBER }}"
-          echo "TF_VAR_PROJECT_REGION=${{ env.TF_VAR_PROJECT_REGION }}"
-          echo "TF_VAR_PROJECT_ZONE=${{ env.TF_VAR_PROJECT_ZONE }}"
-          echo "TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME=${{ env.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}"
-          echo "TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ env.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}"
-          echo "TF_VAR_GITHUB_REPO=${{ env.TF_VAR_GITHUB_REPO }}"
-          echo "TF_VAR_GITHUB_POOL=${{ env.TF_VAR_GITHUB_POOL }}"
-          echo "TF_VAR_GITHUB_PROVIDER=${{ env.TF_VAR_GITHUB_PROVIDER }}"
+          echo "PROJECT_ID=${{ env.PROJECT_ID }}" >> $GITHUB_OUTPUT
+          echo "PROJECT_NUMBER=${{ env.PROJECT_NUMBER }}" >> $GITHUB_OUTPUT
+          echo "PROJECT_REGION=${{ env.PROJECT_REGION }}" >> $GITHUB_OUTPUT
+          echo "PROJECT_ZONE=${{ env.PROJECT_ZONE }}" >> $GITHUB_OUTPUT
+          echo "BOOTSTRAP_STATE_BUCKET_NAME=${{ env.BOOTSTRAP_STATE_BUCKET_NAME }}" >> $GITHUB_OUTPUT
+          echo "ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ env.ARTIFACT_REGISTRY_REPOSITORY_NAME }}" >> $GITHUB_OUTPUT
+          echo "GITHUB_REPO=${{ env.GITHUB_REPO }}" >> $GITHUB_OUTPUT
+          echo "GITHUB_POOL=${{ env.GITHUB_POOL }}" >> $GITHUB_OUTPUT
+          echo "GITHUB_PROVIDER=${{ env.GITHUB_PROVIDER }}" >> $GITHUB_OUTPUT
 
   bootstrap:
     needs: export-env
     uses: ./.github/workflows/01-bootstrap-apply.yml
     with:
       TF_WORKDIR: infra/terraform/bootstrap/
-      TF_VAR_PROJECT_ID: ${{ needs.export-env.outputs.TF_VAR_PROJECT_ID }}
-      TF_VAR_PROJECT_NUMBER: ${{ needs.export-env.outputs.TF_VAR_PROJECT_NUMBER }}
-      TF_VAR_PROJECT_REGION: ${{ needs.export-env.outputs.TF_VAR_PROJECT_REGION }}
-      TF_VAR_PROJECT_ZONE: ${{ needs.export-env.outputs.TF_VAR_PROJECT_ZONE }}
-      TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME: ${{ needs.export-env.outputs.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}
-      TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ needs.export-env.outputs.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-      TF_VAR_GITHUB_REPO: ${{ needs.export-env.outputs.TF_VAR_GITHUB_REPO }}
-      TF_VAR_GITHUB_POOL: ${{ needs.export-env.outputs.TF_VAR_GITHUB_POOL }}
-      TF_VAR_GITHUB_PROVIDER: ${{ needs.export-env.outputs.TF_VAR_GITHUB_PROVIDER }}
+      PROJECT_ID: ${{ needs.export-env.outputs.PROJECT_ID }}
+      PROJECT_NUMBER: ${{ needs.export-env.outputs.PROJECT_NUMBER }}
+      PROJECT_REGION: ${{ needs.export-env.outputs.PROJECT_REGION }}
+      PROJECT_ZONE: ${{ needs.export-env.outputs.PROJECT_ZONE }}
+      BOOTSTRAP_STATE_BUCKET_NAME: ${{ needs.export-env.outputs.BOOTSTRAP_STATE_BUCKET_NAME }}
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ needs.export-env.outputs.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      GITHUB_REPO: ${{ needs.export-env.outputs.GITHUB_REPO }}
+      GITHUB_POOL: ${{ needs.export-env.outputs.GITHUB_POOL }}
+      GITHUB_PROVIDER: ${{ needs.export-env.outputs.GITHUB_PROVIDER }}
 
   infra:
     needs: bootstrap
     uses: ./.github/workflows/02-infra-dev-apply.yml
     with:
       TF_WORKDIR: infra/terraform/main-resources/
-      TF_VAR_PROJECT_ID: ${{ needs.export-env.outputs.TF_VAR_PROJECT_ID }}
-      TF_VAR_PROJECT_NUMBER: ${{ needs.export-env.outputs.TF_VAR_PROJECT_NUMBER }}
-      TF_VAR_PROJECT_REGION: ${{ needs.export-env.outputs.TF_VAR_PROJECT_REGION }}
-      TF_VAR_PROJECT_ZONE: ${{ needs.export-env.outputs.TF_VAR_PROJECT_ZONE }}
+      PROJECT_ID: ${{ needs.export-env.outputs.PROJECT_ID }}
+      PROJECT_NUMBER: ${{ needs.export-env.outputs.PROJECT_NUMBER }}
+      PROJECT_REGION: ${{ needs.export-env.outputs.PROJECT_REGION }}
+      PROJECT_ZONE: ${{ needs.export-env.outputs.PROJECT_ZONE }}

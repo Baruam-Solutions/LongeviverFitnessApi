@@ -8,31 +8,31 @@ on:
       TF_WORKDIR:
         required: true
         type: string
-      TF_VAR_PROJECT_ID:
+      PROJECT_ID:
         required: true
         type: string
-      TF_VAR_PROJECT_NUMBER:
+      PROJECT_NUMBER:
         required: true
         type: string
-      TF_VAR_PROJECT_REGION:
+      PROJECT_REGION:
         required: true
         type: string
-      TF_VAR_PROJECT_ZONE:
+      PROJECT_ZONE:
         required: true
         type: string
-      TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME:
+      BOOTSTRAP_STATE_BUCKET_NAME:
         required: true
         type: string
-      TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME:
+      ARTIFACT_REGISTRY_REPOSITORY_NAME:
         required: true
         type: string
-      TF_VAR_GITHUB_REPO:
+      GITHUB_REPO:
         required: true
         type: string
-      TF_VAR_GITHUB_POOL:
+      GITHUB_POOL:
         required: true
         type: string
-      TF_VAR_GITHUB_PROVIDER:
+      GITHUB_PROVIDER:
         required: true
         type: string
 
@@ -42,15 +42,15 @@ permissions:
   contents: read
 
 env:
-  TF_VAR_PROJECT_ID: ${{ inputs.TF_VAR_PROJECT_ID }}
-  TF_VAR_PROJECT_NUMBER: ${{ inputs.TF_VAR_PROJECT_NUMBER }}
-  TF_VAR_PROJECT_REGION: ${{ inputs.TF_VAR_PROJECT_REGION }}
-  TF_VAR_PROJECT_ZONE: ${{ inputs.TF_VAR_PROJECT_ZONE }}
-  TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME: ${{ inputs.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}
-  TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ inputs.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-  TF_VAR_GITHUB_REPO: ${{ inputs.TF_VAR_GITHUB_REPO }}
-  TF_VAR_GITHUB_POOL: ${{ inputs.TF_VAR_GITHUB_POOL }}
-  TF_VAR_GITHUB_PROVIDER: ${{ inputs.TF_VAR_GITHUB_PROVIDER }}
+  TF_VAR_PROJECT_ID: ${{ inputs.PROJECT_ID }}
+  TF_VAR_PROJECT_NUMBER: ${{ inputs.PROJECT_NUMBER }}
+  TF_VAR_PROJECT_REGION: ${{ inputs.PROJECT_REGION }}
+  TF_VAR_PROJECT_ZONE: ${{ inputs.PROJECT_ZONE }}
+  TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME: ${{ inputs.BOOTSTRAP_STATE_BUCKET_NAME }}
+  TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ inputs.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+  TF_VAR_GITHUB_REPO: ${{ inputs.GITHUB_REPO }}
+  TF_VAR_GITHUB_POOL: ${{ inputs.GITHUB_POOL }}
+  TF_VAR_GITHUB_PROVIDER: ${{ inputs.GITHUB_PROVIDER }}
 
 jobs:
   apply-bootstrap:
@@ -61,9 +61,9 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.4.0'
         with:
-          workload_identity_provider: 'projects/${{ inputs.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.TF_VAR_GITHUB_POOL }}/providers/${{ inputs.TF_VAR_GITHUB_PROVIDER }}'
-          service_account: 'github-actions-sa@${{ inputs.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
-          audience: 'https://iam.googleapis.com/projects/${{ inputs.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.TF_VAR_GITHUB_POOL }}/providers/${{ inputs.TF_VAR_GITHUB_PROVIDER }}'
+          workload_identity_provider: 'projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}'
+          service_account: 'github-actions-sa@${{ inputs.PROJECT_ID }}.iam.gserviceaccount.com'
+          audience: 'https://iam.googleapis.com/projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}'
 
       # Checkout do código
       - name: Checkout source code
