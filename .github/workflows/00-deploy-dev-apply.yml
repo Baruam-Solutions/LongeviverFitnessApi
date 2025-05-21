@@ -24,18 +24,28 @@ jobs:
       TF_VAR_GITHUB_REPO:                       Baruam-Solutions/LongeviverFitnessApi
       TF_VAR_GITHUB_POOL:                       ghpool
       TF_VAR_GITHUB_PROVIDER:                   github-provider
+    outputs:
+      TF_VAR_PROJECT_ID: ${{ env.TF_VAR_PROJECT_ID }}
+      TF_VAR_PROJECT_NUMBER: ${{ env.TF_VAR_PROJECT_NUMBER }}
+      TF_VAR_PROJECT_REGION: ${{ env.TF_VAR_PROJECT_REGION }}
+      TF_VAR_PROJECT_ZONE: ${{ env.TF_VAR_PROJECT_ZONE }}
+      TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME: ${{ env.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}
+      TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ env.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      TF_VAR_GITHUB_REPO: ${{ env.TF_VAR_GITHUB_REPO }}
+      TF_VAR_GITHUB_POOL: ${{ env.TF_VAR_GITHUB_POOL }}
+      TF_VAR_GITHUB_PROVIDER: ${{ env.TF_VAR_GITHUB_PROVIDER }}
     steps:
       - name: Output Environment Variables
         run: |
-          echo "PROJECT_ID=${{ env.TF_VAR_PROJECT_ID }}" >> $GITHUB_OUTPUT
-          echo "PROJECT_NUMBER=${{ env.TF_VAR_PROJECT_NUMBER }}" >> $GITHUB_OUTPUT
-          echo "PROJECT_REGION=${{ env.TF_VAR_PROJECT_REGION }}" >> $GITHUB_OUTPUT
-          echo "PROJECT_ZONE=${{ env.TF_VAR_PROJECT_ZONE }}" >> $GITHUB_OUTPUT
-          echo "BOOTSTRAP_STATE_BUCKET_NAME=${{ env.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}" >> $GITHUB_OUTPUT
-          echo "ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ env.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}" >> $GITHUB_OUTPUT
-          echo "GITHUB_REPO=${{ env.TF_VAR_GITHUB_REPO }}" >> $GITHUB_OUTPUT
-          echo "GITHUB_POOL=${{ env.TF_VAR_GITHUB_POOL }}" >> $GITHUB_OUTPUT
-          echo "GITHUB_PROVIDER=${{ env.TF_VAR_GITHUB_PROVIDER }}" >> $GITHUB_OUTPUT
+          echo "TF_VAR_PROJECT_ID=${{ env.TF_VAR_PROJECT_ID }}"
+          echo "TF_VAR_PROJECT_NUMBER=${{ env.TF_VAR_PROJECT_NUMBER }}"
+          echo "TF_VAR_PROJECT_REGION=${{ env.TF_VAR_PROJECT_REGION }}"
+          echo "TF_VAR_PROJECT_ZONE=${{ env.TF_VAR_PROJECT_ZONE }}"
+          echo "TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME=${{ env.TF_VAR_BOOTSTRAP_STATE_BUCKET_NAME }}"
+          echo "TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME=${{ env.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}"
+          echo "TF_VAR_GITHUB_REPO=${{ env.TF_VAR_GITHUB_REPO }}"
+          echo "TF_VAR_GITHUB_POOL=${{ env.TF_VAR_GITHUB_POOL }}"
+          echo "TF_VAR_GITHUB_PROVIDER=${{ env.TF_VAR_GITHUB_PROVIDER }}"
 
   bootstrap:
     needs: export-env
