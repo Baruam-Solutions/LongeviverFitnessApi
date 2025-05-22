@@ -35,7 +35,7 @@ jobs:
           echo "Project Number (from env): ${{ env.PROJECT_NUMBER }}"
           echo "GIT_POOL (from env): ${{ env.GIT_POOL }}"
           echo "GIT_PROVIDER (from env): ${{ env.GIT_PROVIDER }}"
-          echo "GIT_REPO (from env): ${{ env.GITHUB_REPOSITORY }}"
+          echo "GIT_REPO (from env): $env.GITHUB_REPOSITORY"
           echo "-----------------------------------------------------"
 
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
