@@ -31,10 +31,10 @@ jobs:
           env # Comando 'env' lista todas as variáveis de ambiente
           echo "-----------------------------------------------------"
           echo "Setting up environment: ${{ github.event.inputs.environment }}"
-          echo "Project ID (from env): ${{ env.PROJECT_ID }}"
-          echo "Project Number (from env): ${{ env.PROJECT_NUMBER }}"
-          echo "GIT_POOL (from env): ${{ env.GIT_POOL }}"
-          echo "GIT_PROVIDER (from env): ${{ env.GIT_PROVIDER }}"
+          echo "Project ID (from env): $PROJECT_ID"
+          echo "Project Number (from env): $PROJECT_NUMBER"
+          echo "GIT_POOL (from env): $GIT_POOL"
+          echo "GIT_PROVIDER (from env): $GIT_PROVIDER"
           echo "GIT_REPO (from env): $GITHUB_REPOSITORY"
           echo "-----------------------------------------------------"
 
