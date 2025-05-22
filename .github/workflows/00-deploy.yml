@@ -1,9 +1,6 @@
 name: Deploy completo
 
 on:
-  push:
-    branches:
-      - feature/BARUAM-24
   workflow_dispatch:
     inputs:
       environment:
@@ -36,15 +33,9 @@ jobs:
     steps:
       - name: Debug - List all environment variables
         run: |
-          echo "--- Listing all environment variables for this job ---"
-          env # Comando 'env' lista todas as variáveis de ambiente
           echo "-----------------------------------------------------"
           echo "Setting up environment: ${{ github.event.inputs.environment }}"
-          echo "Project ID (from env): $PROJECT_ID"
-          echo "Project Number (from env): $PROJECT_NUMBER"
-          echo "GIT_POOL (from env): $GIT_POOL"
-          echo "GIT_PROVIDER (from env): $GIT_PROVIDER"
-          echo "GIT_REPO (from env): $GITHUB_REPOSITORY"
+          echo "Project ID:             ${{ vars.PROJECT_ID }}"
           echo "-----------------------------------------------------"
 
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
