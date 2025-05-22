@@ -4,16 +4,6 @@ on:
   push:
     branches:
       - feature/BARUAM-24
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Ambiente para implantar (dev, prod)'
-        required: true
-        type: choice
-        default: dev-mateus
-        options:
-          - dev-mateus
-          - prod
 
 permissions:
   id-token: write
@@ -23,17 +13,17 @@ jobs:
   # Job para definir o ambiente e carregar variáveis/secrets correspondentes
   setup-environment:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: dev-mateus
     outputs:
       PROJECT_ID: ${{ PROJECT_ID }}
-      PROJECT_NUMBER: ${{ PROJECT_NUMBER }}
-      PROJECT_REGION: ${{ PROJECT_REGION }}
-      PROJECT_ZONE: ${{ PROJECT_ZONE }}
-      BOOTSTRAP_STATE_BUCKET_NAME: ${{ BOOTSTRAP_STATE_BUCKET_NAME }}
-      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-      GITHUB_REPO: ${{ GIT_REPO }}
-      GITHUB_POOL: ${{ GIT_POOL }}
-      GITHUB_PROVIDER: ${{ GIT_PROVIDER }}
+      PROJECT_NUMBER: ${{ env.PROJECT_NUMBER }}
+      PROJECT_REGION: ${{ env.PROJECT_REGION }}
+      PROJECT_ZONE: ${{ env.PROJECT_ZONE }}
+      BOOTSTRAP_STATE_BUCKET_NAME: ${{ env.BOOTSTRAP_STATE_BUCKET_NAME }}
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ env.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      GITHUB_REPO: ${{ env.GIT_REPO }}
+      GITHUB_POOL: ${{ env.GIT_POOL }}
+      GITHUB_PROVIDER: ${{ env.GIT_PROVIDER }}
     steps:
       - name: Debug - List all environment variables
         run: |
@@ -41,11 +31,11 @@ jobs:
           env # Comando 'env' lista todas as variáveis de ambiente
           echo "-----------------------------------------------------"
           echo "Setting up environment: ${{ github.event.inputs.environment }}"
-          echo "Project ID (from env): ${{ PROJECT_ID }}"
-          echo "Project Number (from env): ${{ PROJECT_NUMBER }}"
-          echo "GIT_POOL (from env): ${{ GIT_POOL }}"
-          echo "GIT_PROVIDER (from env): ${{ GIT_PROVIDER }}"
-          echo "GIT_REPO (from env): ${{ GIT_REPO }}"
+          echo "Project ID (from env): ${{ env.PROJECT_ID }}"
+          echo "Project Number (from env): ${{ env.PROJECT_NUMBER }}"
+          echo "GIT_POOL (from env): ${{ env.GIT_POOL }}"
+          echo "GIT_PROVIDER (from env): ${{ env.GIT_PROVIDER }}"
+          echo "GIT_REPO (from env): ${{ env.GIT_REPO }}"
           echo "-----------------------------------------------------"
 
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
