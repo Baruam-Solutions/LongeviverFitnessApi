@@ -11,7 +11,7 @@ on:
       PROJECT_ID:
         required: true
         type: string
-      PROJECT_NUMBER: # <-- Verifique este input
+      PROJECT_NUMBER:
         required: true
         type: string
       PROJECT_REGION:
@@ -59,16 +59,6 @@ jobs:
       # Checkout do código
       - name: Checkout source code
         uses: actions/checkout@v4
-
-      # DEBUG
-      - name: Debug Workload Identity Provider Inputs
-        run: |
-          echo "Debug PROJECT_NUMBER (from input): ${{ inputs.PROJECT_NUMBER }}"
-          echo "Debug GITHUB_POOL (from input): ${{ inputs.GITHUB_POOL }}"
-          echo "Debug GITHUB_PROVIDER (from input): ${{ inputs.GITHUB_PROVIDER }}"
-          echo "Debug Constructed WIF Provider: projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}"
-          echo "Debug Service Account Project ID: ${{ inputs.PROJECT_ID }}"
-
 
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
