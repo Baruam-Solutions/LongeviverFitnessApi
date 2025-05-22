@@ -42,7 +42,7 @@ jobs:
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
   bootstrap:
     needs: setup-environment
-    uses: ./.github/workflows/01-bootstrap-apply.yml
+    uses: ./.github/workflows/01-bootstrap.yml
     with:
       TF_WORKDIR: infra/terraform/bootstrap/
       PROJECT_ID: ${{ needs.setup-environment.outputs.PROJECT_ID }}
@@ -58,7 +58,7 @@ jobs:
   # Job para aplicar a infraestrutura principal
   infra:
     needs: [bootstrap, setup-environment]
-    uses: ./.github/workflows/02-infra-apply.yml
+    uses: ./.github/workflows/02-infra.yml
     with:
       TF_WORKDIR: infra/terraform/main-resources/
       PROJECT_ID: ${{ needs.setup-environment.outputs.PROJECT_ID }}
