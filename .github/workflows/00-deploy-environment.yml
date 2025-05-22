@@ -1,0 +1,59 @@
+name: Deploy completo
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Ambiente para implantar (dev, prod)'
+        required: true
+        type: choice
+        options:
+          - dev-mateus
+          - prod
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  # Job para definir o ambiente e carregar variáveis/secrets correspondentes
+  setup-environment:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    outputs:
+      PROJECT_ID: ${{ vars.PROJECT_ID }}
+      PROJECT_NUMBER: ${{ vars.PROJECT_NUMBER }}
+      PROJECT_REGION: ${{ vars.PROJECT_REGION }}
+      PROJECT_ZONE: ${{ vars.PROJECT_ZONE }}
+      BOOTSTRAP_STATE_BUCKET_NAME: ${{ vars.BOOTSTRAP_STATE_BUCKET_NAME }}
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ vars.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      GITHUB_REPO: ${{ vars.GITHUB_REPO }}
+      GITHUB_POOL: ${{ vars.GITHUB_POOL }}
+      GITHUB_PROVIDER: ${{ vars.GITHUB_PROVIDER }}
+
+  # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
+  bootstrap:
+    needs: setup-environment
+    uses: ./.github/workflows/01-bootstrap-apply.yml
+    with:
+      TF_WORKDIR: infra/terraform/bootstrap/
+      PROJECT_ID: ${{ needs.setup-environment.outputs.PROJECT_ID }}
+      PROJECT_NUMBER: ${{ needs.setup-environment.outputs.PROJECT_NUMBER }}
+      PROJECT_REGION: ${{ needs.setup-environment.outputs.PROJECT_REGION }}
+      PROJECT_ZONE: ${{ needs.setup-environment.outputs.PROJECT_ZONE }}
+      BOOTSTRAP_STATE_BUCKET_NAME: ${{ needs.setup-environment.outputs.BOOTSTRAP_STATE_BUCKET_NAME }}
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ needs.setup-environment.outputs.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      GITHUB_REPO: ${{ needs.setup-environment.outputs.GITHUB_REPO }}
+      GITHUB_POOL: ${{ needs.setup-environment.outputs.GITHUB_POOL }}
+      GITHUB_PROVIDER: ${{ needs.setup-environment.outputs.GITHUB_PROVIDER }}
+
+  # Job para aplicar a infraestrutura principal
+  infra:
+    needs: [bootstrap, setup-environment]
+    uses: ./.github/workflows/02-infra-apply.yml
+    with:
+      TF_WORKDIR: infra/terraform/main-resources/
+      PROJECT_ID: ${{ needs.setup-environment.outputs.PROJECT_ID }}
+      PROJECT_NUMBER: ${{ needs.setup-environment.outputs.PROJECT_NUMBER }}
+      GITHUB_POOL: ${{ needs.setup-environment.outputs.GITHUB_POOL }}
+      GITHUB_PROVIDER: ${{ needs.setup-environment.outputs.GITHUB_PROVIDER }}
