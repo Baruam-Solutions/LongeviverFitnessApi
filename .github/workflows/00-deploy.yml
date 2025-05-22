@@ -31,7 +31,7 @@ jobs:
       GITHUB_POOL: ${{ vars.GIT_POOL }}
       GITHUB_PROVIDER: ${{ vars.GIT_PROVIDER }}
     steps:
-      - name: Debug - List all environment variables
+      - name: List environment variables
         run: |
           echo "-----------------------------------------------------"
           echo "Setting up environment: ${{ github.event.inputs.environment }}"
