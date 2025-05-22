@@ -22,7 +22,7 @@ jobs:
   # Job para definir o ambiente e carregar variáveis/secrets correspondentes
   setup-environment:
     runs-on: ubuntu-latest
-    environment: dev-mateus
+    environment: ${{ github.event.inputs.environment }}
     outputs:
       PROJECT_ID: ${{ env.PROJECT_ID }}
       PROJECT_NUMBER: ${{ env.PROJECT_NUMBER }}
