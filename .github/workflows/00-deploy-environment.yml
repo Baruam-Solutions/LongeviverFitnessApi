@@ -30,6 +30,11 @@ jobs:
       GITHUB_REPO: ${{ vars.GITHUB_REPO }}
       GITHUB_POOL: ${{ vars.GITHUB_POOL }}
       GITHUB_PROVIDER: ${{ vars.GITHUB_PROVIDER }}
+    steps:
+      - name: Log environment details
+        run: |
+          echo "Setting up environment: ${{ github.event.inputs.environment }}"
+          echo "Project ID: ${{ vars.GCP_PROJECT_ID }}"
 
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
   bootstrap:
