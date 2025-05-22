@@ -36,6 +36,7 @@ jobs:
           echo "-----------------------------------------------------"
           echo "Setting up environment: ${{ github.event.inputs.environment }}"
           echo "Project ID:             ${{ vars.PROJECT_ID }}"
+          echo "Project ID:             ${{ env.GITHUB_REPOSITORY }}"
           echo "-----------------------------------------------------"
 
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
