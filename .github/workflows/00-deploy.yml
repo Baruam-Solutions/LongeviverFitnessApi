@@ -27,7 +27,7 @@ jobs:
       PROJECT_ZONE: ${{ vars.PROJECT_ZONE }}
       BOOTSTRAP_STATE_BUCKET_NAME: ${{ vars.BOOTSTRAP_STATE_BUCKET_NAME }}
       ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ vars.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-      GITHUB_REPO: ${{ env.GITHUB_REPOSITORY }}
+      GITHUB_REPO: ${{ var.GIT_REPOSITORY }}
       GITHUB_POOL: ${{ vars.GIT_POOL }}
       GITHUB_PROVIDER: ${{ vars.GIT_PROVIDER }}
     steps:
@@ -36,7 +36,6 @@ jobs:
           echo "-----------------------------------------------------"
           echo "Setting up environment: ${{ github.event.inputs.environment }}"
           echo "Project ID:             ${{ vars.PROJECT_ID }}"
-          echo "Project ID:             ${{ env.GITHUB_REPOSITORY }}"
           echo "-----------------------------------------------------"
 
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
