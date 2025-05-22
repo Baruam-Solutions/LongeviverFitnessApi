@@ -34,10 +34,18 @@ jobs:
       GITHUB_POOL: ${{ env.GITHUB_POOL }}
       GITHUB_PROVIDER: ${{ env.GITHUB_PROVIDER }}
     steps:
-      - name: Log environment details
+      - name: Debug - List all environment variables
         run: |
+          echo "--- Listing all environment variables for this job ---"
+          env # Comando 'env' lista todas as variáveis de ambiente
+          echo "-----------------------------------------------------"
           echo "Setting up environment: ${{ github.event.inputs.environment }}"
-          echo "Project ID: ${{ vars.GCP_PROJECT_ID }}"
+          echo "Project ID (from env): ${{ env.PROJECT_ID }}"
+          echo "Project Number (from env): ${{ env.PROJECT_NUMBER }}"
+          echo "GIT_POOL (from env): ${{ env.GIT_POOL }}"
+          echo "GIT_PROVIDER (from env): ${{ env.GIT_PROVIDER }}"
+          echo "GIT_REPO (from env): ${{ env.GIT_REPO }}"
+          echo "-----------------------------------------------------"
 
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
   bootstrap:
