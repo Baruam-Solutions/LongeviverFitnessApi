@@ -57,7 +57,7 @@ jobs:
   # Job para aplicar a infraestrutura principal
   infra:
     needs: [bootstrap, setup-environment]
-    uses: ./.github/workflows/02-infra.yml
+    uses: ./.github/workflows/02-main-resources.yml
     with:
       TF_WORKDIR: infra/terraform/main-resources/
       PROJECT_ID: ${{ needs.setup-environment.outputs.PROJECT_ID }}

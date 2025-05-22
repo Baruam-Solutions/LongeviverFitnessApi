@@ -7,8 +7,8 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "lgv-terraform-bootstrap-state-mateus"           # Nome do bucket criado
-    prefix = "terraform/bootstrap/state"                      # Caminho para o arquivo de estado
+    bucket = "lgv-terraform-bootstrap-state-mateus" # Nome do bucket criado
+    prefix = "terraform/main-resources/state"                      # Caminho para o arquivo de estado
   }
 }
 
