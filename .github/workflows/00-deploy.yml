@@ -4,6 +4,15 @@ on:
   push:
     branches:
       - feature/BARUAM-24
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Escolha o ambiente para o deploy'
+        required: true
+        default: 'dev-mateus'
+        type: choice
+        options:
+          - dev-mateus
 
 permissions:
   id-token: write
