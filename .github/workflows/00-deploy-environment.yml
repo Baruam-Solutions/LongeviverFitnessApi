@@ -24,15 +24,15 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev-mateus
     outputs:
-      PROJECT_ID: ${{ vars.PROJECT_ID }}
-      PROJECT_NUMBER: ${{ vars.PROJECT_NUMBER }}
-      PROJECT_REGION: ${{ vars.PROJECT_REGION }}
-      PROJECT_ZONE: ${{ vars.PROJECT_ZONE }}
-      BOOTSTRAP_STATE_BUCKET_NAME: ${{ vars.BOOTSTRAP_STATE_BUCKET_NAME }}
-      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ vars.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-      GITHUB_REPO: ${{ vars.GITHUB_REPO }}
-      GITHUB_POOL: ${{ vars.GITHUB_POOL }}
-      GITHUB_PROVIDER: ${{ vars.GITHUB_PROVIDER }}
+      PROJECT_ID: ${{ env.PROJECT_ID }}
+      PROJECT_NUMBER: ${{ env.PROJECT_NUMBER }}
+      PROJECT_REGION: ${{ env.PROJECT_REGION }}
+      PROJECT_ZONE: ${{ env.PROJECT_ZONE }}
+      BOOTSTRAP_STATE_BUCKET_NAME: ${{ env.BOOTSTRAP_STATE_BUCKET_NAME }}
+      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ env.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
+      GITHUB_REPO: ${{ env.GITHUB_REPO }}
+      GITHUB_POOL: ${{ env.GITHUB_POOL }}
+      GITHUB_PROVIDER: ${{ env.GITHUB_PROVIDER }}
     steps:
       - name: Log environment details
         run: |
