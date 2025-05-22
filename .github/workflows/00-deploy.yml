@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev-mateus
     outputs:
-      PROJECT_ID: ${{ PROJECT_ID }}
+      PROJECT_ID: ${{ env.PROJECT_ID }}
       PROJECT_NUMBER: ${{ env.PROJECT_NUMBER }}
       PROJECT_REGION: ${{ env.PROJECT_REGION }}
       PROJECT_ZONE: ${{ env.PROJECT_ZONE }}
