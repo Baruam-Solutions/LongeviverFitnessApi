@@ -1,6 +1,9 @@
 name: Deploy completo
 
 on:
+  push:
+    branches:
+      - feature/BARUAM-24
   workflow_dispatch:
     inputs:
       environment:
