@@ -1,0 +1,12 @@
+PROJECT_ID                = "SUBSTITUA_POR_SEU_ID"
+PROJECT_REGION            = "SUBSTITUA_POR_SEU_REGION"
+PROJECT_ZONE              = "SUBSTITUA_POR_SEU_ZONE"
+K8S_SERVICE_ACCOUNT_EMAIL = "SUBSTITUA_POR_SEU_K8S_SERVICE_ACCOUNT_EMAIL"
+K8S_ENDPOINT              = "SUBSTITUA_POR_SEU_K8S_ENDPOINT"
+K8S_CERTIFICATE_AUTHORITY = "SUBSTITUA_POR_SEU_K8S_CERTIFICATE_AUTHORITY"
+DATABASE                  = "SUBSTITUA_POR_SEU_DATABASE"
+USERNAME                  = "SUBSTITUA_POR_SEU_USERNAME"
+PASSWORD                  = "SUBSTITUA_POR_SEU_PASSWORD"
+
+# para executar o terraform bootstrap utilizando estas variáveis, execute o seguinte comando:
+#   terraform apply -var-file="k8s_example.tfvars"

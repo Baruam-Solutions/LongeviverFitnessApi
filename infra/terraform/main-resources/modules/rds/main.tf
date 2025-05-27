@@ -1,13 +1,13 @@
 # APIs e serviços para utilizar Cloud Sql
 resource "google_project_service" "compute" {
-  project            = var.id_project
+  project            = var.project_id
   service            = "compute.googleapis.com"
   disable_on_destroy = false
 }
 
 # APIs e serviços para acessar base de dados por proxy
 resource "google_project_service" "sqladmin" {
-  project            = var.id_project
+  project            = var.project_id
   service            = "sqladmin.googleapis.com"
   disable_on_destroy = false
 }
