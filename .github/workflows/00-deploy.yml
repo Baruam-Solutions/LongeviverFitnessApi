@@ -35,8 +35,6 @@ jobs:
       DB_EDITION: ${{ vars.DB_EDITION }}
       DB_TIER: ${{ vars.DB_TIER }}
       DATABASE: ${{ vars.DATABASE }}
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_DELETION_PROTECTION: ${{ vars.DB_DELETION_PROTECTION }}
       GKE_CLUSTER_NAME: ${{ vars.GKE_CLUSTER_NAME }}
       GKE_INITIAL_NODE_COUNT: ${{ vars.GKE_INITIAL_NODE_COUNT }}
@@ -81,11 +79,11 @@ jobs:
       GKE_NODE_POOL_NAME: ${{ needs.setup-environment.outputs.GKE_NODE_POOL_NAME }}
       DB_TIER: ${{ needs.setup-environment.outputs.DB_TIER }}
       DATABASE: ${{ needs.setup-environment.outputs.DATABASE }}
-      DB_USERNAME: ${{ needs.setup-environment.outputs.DB_USERNAME }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       GKE_INITIAL_NODE_COUNT: ${{ needs.setup-environment.outputs.GKE_INITIAL_NODE_COUNT }}
       PROJECT_ZONE: ${{ needs.setup-environment.outputs.PROJECT_ZONE }}
       DB_DELETION_PROTECTION: ${{ needs.setup-environment.outputs.DB_DELETION_PROTECTION }}
       GKE_CLUSTER_NAME: ${{ needs.setup-environment.outputs.GKE_CLUSTER_NAME }}
       GKE_PREEMPTIBLE: ${{ needs.setup-environment.outputs.GKE_PREEMPTIBLE }}
       GKE_NODE_MACHINE_TYPE: ${{ needs.setup-environment.outputs.GKE_NODE_MACHINE_TYPE }}
-      DB_PASSWORD: ${{ needs.setup-environment.outputs.DB_PASSWORD }}
