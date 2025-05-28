@@ -7,6 +7,11 @@ terraform {
       version = "~> 2.36.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "lgv-terraform-bootstrap-state-mateus"           # Nome do bucket criado
+    prefix = "terraform/k8s/state"                      # Caminho para o arquivo de estado
+  }
 }
 
 provider "google" {

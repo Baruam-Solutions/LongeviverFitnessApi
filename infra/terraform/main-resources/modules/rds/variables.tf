@@ -1,3 +1,13 @@
+variable "project_id" {
+  description = "Id do projeto na cloud"
+  type        = string
+}
+
+variable "region" {
+  description = "Região da instância"
+  type        = string
+}
+
 variable "instance_name" {
   description = "Nome da instância do Cloud SQL"
   type        = string
@@ -8,11 +18,6 @@ variable "database_version" {
   description = "Versão do PostgreSQL"
   type        = string
   default     = "POSTGRES_17"
-}
-
-variable "region" {
-  description = "Região da instância"
-  type        = string
 }
 
 variable "tier" {
@@ -33,22 +38,15 @@ variable "database_name" {
 variable "deletion_protection" {
   description = "Habilita proteção de exclusão da instância "
   type        = bool
-  default     = true
-}
-
-variable "project_id" {
-  description = "Id do projeto na cloud"
-  type        = string
-}
-
-# TODO - Usando para teste
-variable "password" {
-  description = "Senha do usuário administrador postgres"
-  type        = string
-  sensitive   = true
 }
 
 variable "username" {
   description = "Nome do usuário administrador postgres"
   type        = string
+}
+
+variable "password" {
+  description = "Senha do usuário administrador postgres"
+  type        = string
+  sensitive   = true
 }

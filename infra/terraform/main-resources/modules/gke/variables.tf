@@ -1,4 +1,4 @@
-variable "id_project" {
+variable "project_id" {
   description = "Id do projeto na cloud"
   type        = string
 }
@@ -33,14 +33,4 @@ variable "name_node_pool" {
 variable "preemptible" {
   description = "Define se serão utilizadas máquinas mais baratas que podem ser encerradas pelo Google"
   type        = bool
-}
-
-variable "cluster_namespace" {
-  description = "Nome do nasmespace do cluster"
-  type        = string
-}
-
-variable "ksa_name" {
-  description = "Nome do kubernest service account"
-  type        = string
 }

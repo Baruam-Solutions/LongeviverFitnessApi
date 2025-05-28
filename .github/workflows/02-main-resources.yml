@@ -9,13 +9,46 @@ on:
       PROJECT_ID:
         required: true
         type: string
-      PROJECT_NUMBER:
+      PROJECT_ZONE:
         required: true
         type: string
-      GITHUB_POOL:
+      DATABASE:
         required: true
         type: string
-      GITHUB_PROVIDER:
+      DB_INSTANCE_NAME:
+        required: true
+        type: string
+      DB_USERNAME:
+        required: true
+        type: string
+      DB_PASSWORD:
+        required: true
+        type: string
+      DB_EDITION:
+        required: true
+        type: string
+      DB_VERSION:
+        required: true
+        type: string
+      DB_TIER:
+        required: true
+        type: string
+      DB_DELETION_PROTECTION:
+        required: true
+        type: boolean
+      GKE_CLUSTER_NAME:
+        required: true
+        type: string
+      GKE_INITIAL_NODE_COUNT:
+        required: true
+        type: number
+      GKE_NODE_MACHINE_TYPE:
+        required: true
+        type: string
+      GKE_PREEMPTIBLE:
+        required: true
+        type: boolean
+      GKE_NODE_POOL_NAME:
         required: true
         type: string
 
@@ -23,6 +56,24 @@ on:
 permissions:
   id-token: write
   contents: read
+
+env:
+  TF_VAR_PROJECT_ID: ${{ inputs.PROJECT_ID }}
+  TF_VAR_PROJECT_REGION: ${{ inputs.PROJECT_REGION }}
+  TF_VAR_PROJECT_ZONE: ${{ inputs.PROJECT_ZONE }}
+  TF_VAR_DATABASE: ${{ inputs.DATABASE }}
+  TF_VAR_DB_INSTANCE_NAME: ${{ inputs.DB_INSTANCE_NAME }}
+  TF_VAR_DB_USERNAME: ${{ inputs.DB_USERNAME }}
+  TF_VAR_DB_PASSWORD: ${{ inputs.DB_PASSWORD }}
+  TF_VAR_DB_EDITION: ${{ inputs.DB_EDITION }}
+  TF_VAR_DB_VERSION: ${{ inputs.DB_VERSION }}
+  TF_VAR_DB_TIER: ${{ inputs.DB_TIER }}
+  TF_VAR_DB_DELETION_PROTECTION: ${{ inputs.DB_DELETION_PROTECTION }}
+  TF_VAR_GKE_CLUSTER_NAME: ${{ inputs.GKE_CLUSTER_NAME }}
+  TF_VAR_GKE_INITIAL_NODE_COUNT: ${{ inputs.GKE_INITIAL_NODE_COUNT }}
+  TF_VAR_GKE_NODE_MACHINE_TYPE: ${{ inputs.GKE_NODE_MACHINE_TYPE }}
+  TF_VAR_GKE_PREEMPTIBLE: ${{ inputs.GKE_PREEMPTIBLE }}
+  TF_VAR_GKE_NODE_POOL_NAME: ${{ inputs.GKE_NODE_POOL_NAME }}
 
 jobs:
   apply-infra-dev:
@@ -39,3 +90,28 @@ jobs:
         with:
           workload_identity_provider: 'projects/${{ inputs.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ inputs.GITHUB_POOL }}/providers/${{ inputs.GITHUB_PROVIDER }}'
           service_account: 'github-actions-sa@${{ inputs.PROJECT_ID }}.iam.gserviceaccount.com'
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform Init
+        run: |
+          cd ${{ inputs.TF_WORKDIR }}
+          terraform init
+
+      - name: Terraform Validate
+        run: |
+          cd ${{ inputs.TF_WORKDIR }}
+          terraform validate
+
+      - name: Terraform Plan
+        run: |
+          cd ${{ inputs.TF_WORKDIR }}
+          terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        run: |
+          cd ${{ inputs.TF_WORKDIR }}
+          terraform apply -auto-approve tfplan

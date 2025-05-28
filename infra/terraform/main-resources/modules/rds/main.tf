@@ -12,11 +12,6 @@ resource "google_project_service" "sqladmin" {
   disable_on_destroy = false
 }
 
-resource "time_sleep" "espera_30_seconds" {
-  depends_on = [google_project_service.compute, google_project_service.sqladmin]
-  create_duration = "30s"
-}
-
 # recurso que cria nova instancia de base postgres
 resource "google_sql_database_instance" "main" {
   name                = var.instance_name
@@ -41,7 +36,7 @@ resource "google_sql_database_instance" "main" {
     }
   }
 
-  depends_on = [time_sleep.espera_30_seconds]
+  depends_on = [google_project_service.compute, google_project_service.sqladmin]
 }
 
 # cria base de dados
@@ -72,7 +67,6 @@ resource "google_project_iam_member" "client_cloud_sql" {
   depends_on = [google_service_account.service_account_sql]
 }
 
-# TODO - Usando para teste
 # cria um usuário para acessar o sql
 resource "google_sql_user" "postgres_user" {
   name     = var.username

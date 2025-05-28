@@ -33,13 +33,18 @@ variable "DATABASE" {
   type        = string
 }
 
-variable "USERNAME" {
+variable "DB_USERNAME" {
   description = "Nome do usuário da base de dados"
   type        = string
 }
 
-variable "PASSWORD" {
+variable "DB_PASSWORD" {
   description = "Senha do usuário da base de dados"
   type        = string
   sensitive   = true
+}
+
+variable "K8S_SERVICE_ACCOUNT_NAME" {
+  description = "Nome do K8s service account"
+  type        = string
 }
