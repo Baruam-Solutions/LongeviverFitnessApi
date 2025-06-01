@@ -16,74 +16,17 @@ permissions:
   contents: read
 
 jobs:
-  # Job para definir o ambiente e carregar variáveis/secrets correspondentes
-  setup-environment:
-    runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
-    outputs:
-      PROJECT_ID: ${{ vars.PROJECT_ID }}
-      PROJECT_NUMBER: ${{ vars.PROJECT_NUMBER }}
-      PROJECT_REGION: ${{ vars.PROJECT_REGION }}
-      PROJECT_ZONE: ${{ vars.PROJECT_ZONE }}
-      BOOTSTRAP_STATE_BUCKET_NAME: ${{ vars.BOOTSTRAP_STATE_BUCKET_NAME }}
-      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ vars.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-      GITHUB_REPO: ${{ vars.GIT_REPOSITORY }}
-      GITHUB_POOL: ${{ vars.GIT_POOL }}
-      GITHUB_PROVIDER: ${{ vars.GIT_PROVIDER }}
-      DB_INSTANCE_NAME: ${{ vars.DB_INSTANCE_NAME }}
-      DB_VERSION: ${{ vars.DB_VERSION }}
-      DB_EDITION: ${{ vars.DB_EDITION }}
-      DB_TIER: ${{ vars.DB_TIER }}
-      DATABASE: ${{ vars.DATABASE }}
-      DB_DELETION_PROTECTION: ${{ vars.DB_DELETION_PROTECTION }}
-      GKE_CLUSTER_NAME: ${{ vars.GKE_CLUSTER_NAME }}
-      GKE_INITIAL_NODE_COUNT: ${{ vars.GKE_INITIAL_NODE_COUNT }}
-      GKE_NODE_MACHINE_TYPE: ${{ vars.GKE_NODE_MACHINE_TYPE }}
-      GKE_PREEMPTIBLE: ${{ vars.GKE_PREEMPTIBLE }}
-      GKE_NODE_POOL_NAME: ${{ vars.GKE_NODE_POOL_NAME }}
-
-    steps:
-      - name: List environment variables
-        run: |
-          echo "-----------------------------------------------------"
-          echo "Setting up environment: ${{ github.event.inputs.environment }}"
-          echo "Project ID:             ${{ vars.PROJECT_ID }}"
-          echo "-----------------------------------------------------"
-
   # Job para aplicar o bootstrap com permissões para git actions WIF, state bucket e artifact registry
   bootstrap:
-    needs: setup-environment
     uses: ./.github/workflows/01-bootstrap.yml
     with:
       TF_WORKDIR: infra/terraform/bootstrap/
-      PROJECT_ID: ${{ needs.setup-environment.outputs.PROJECT_ID }}
-      PROJECT_NUMBER: ${{ needs.setup-environment.outputs.PROJECT_NUMBER }}
-      PROJECT_REGION: ${{ needs.setup-environment.outputs.PROJECT_REGION }}
-      PROJECT_ZONE: ${{ needs.setup-environment.outputs.PROJECT_ZONE }}
-      BOOTSTRAP_STATE_BUCKET_NAME: ${{ needs.setup-environment.outputs.BOOTSTRAP_STATE_BUCKET_NAME }}
-      ARTIFACT_REGISTRY_REPOSITORY_NAME: ${{ needs.setup-environment.outputs.ARTIFACT_REGISTRY_REPOSITORY_NAME }}
-      GITHUB_REPO: ${{ needs.setup-environment.outputs.GITHUB_REPO }}
-      GITHUB_POOL: ${{ needs.setup-environment.outputs.GITHUB_POOL }}
-      GITHUB_PROVIDER: ${{ needs.setup-environment.outputs.GITHUB_PROVIDER }}
+      ENV_NAME: ${{ github.event.inputs.environment }}
 
   # Job para aplicar a infraestrutura principal
   infra:
-    needs: [bootstrap, setup-environment]
+    needs: [ bootstrap ]
     uses: ./.github/workflows/02-main-resources.yml
     with:
       TF_WORKDIR: infra/terraform/main-resources/
-      PROJECT_ID: ${{ needs.setup-environment.outputs.PROJECT_ID }}
-      DB_INSTANCE_NAME: ${{ needs.setup-environment.outputs.DB_INSTANCE_NAME }}
-      DB_VERSION: ${{ needs.setup-environment.outputs.DB_VERSION }}
-      DB_EDITION: ${{ needs.setup-environment.outputs.DB_EDITION }}
-      GKE_NODE_POOL_NAME: ${{ needs.setup-environment.outputs.GKE_NODE_POOL_NAME }}
-      DB_TIER: ${{ needs.setup-environment.outputs.DB_TIER }}
-      DATABASE: ${{ needs.setup-environment.outputs.DATABASE }}
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      GKE_INITIAL_NODE_COUNT: ${{ needs.setup-environment.outputs.GKE_INITIAL_NODE_COUNT }}
-      PROJECT_ZONE: ${{ needs.setup-environment.outputs.PROJECT_ZONE }}
-      DB_DELETION_PROTECTION: ${{ needs.setup-environment.outputs.DB_DELETION_PROTECTION }}
-      GKE_CLUSTER_NAME: ${{ needs.setup-environment.outputs.GKE_CLUSTER_NAME }}
-      GKE_PREEMPTIBLE: ${{ needs.setup-environment.outputs.GKE_PREEMPTIBLE }}
-      GKE_NODE_MACHINE_TYPE: ${{ needs.setup-environment.outputs.GKE_NODE_MACHINE_TYPE }}
+      ENV_NAME: ${{ github.event.inputs.environment }}
