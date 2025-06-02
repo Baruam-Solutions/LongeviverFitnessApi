@@ -26,6 +26,14 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
+      - name: inspect env
+        run: |
+          echo "ENV_NAME: ${{ inputs.ENV_NAME }}"
+          echo "TF_VAR_PROJECT_NUMBER: ${{ vars.TF_VAR_PROJECT_NUMBER }}"
+          echo "TF_VAR_PROJECT_ID: ${{ vars.TF_VAR_PROJECT_ID }}"
+          echo "TF_VAR_GITHUB_POOL: ${{ vars.TF_VAR_GITHUB_POOL }}"
+          echo "TF_VAR_GITHUB_PROVIDER: ${{ vars.TF_VAR_GITHUB_PROVIDER }}"
+
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
