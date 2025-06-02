@@ -19,7 +19,7 @@ module "gh_actions" {
   project_region                        = var.PROJECT_REGION
   artifact_registry_repository_name     = module.artifact_repository.artifact_repository_id
   terraform_bootstrap_state_bucket_name = module.terraform_bootstrap_state_storage.bucket_name
-  github_repo                           = var.GITHUB_REPO
-  gh_pool                               = var.GITHUB_POOL
-  gh_provider                           = var.GITHUB_PROVIDER
+  github_repo                           = var.GIT_REPO
+  gh_pool                               = var.GIT_POOL
+  gh_provider                           = var.GIT_PROVIDER
 }

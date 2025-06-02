@@ -18,17 +18,17 @@ variable "ARTIFACT_REGISTRY_REPOSITORY_NAME" {
   type        = string
 }
 
-variable "GITHUB_REPO" {
+variable "GIT_REPO" {
   description = "Nome do repositório no GitHub"
   type        = string
 }
 
-variable "GITHUB_POOL" {
+variable "GIT_POOL" {
   description = "Nome do pool do GitHub Actions"
   type        = string
 }
 
-variable "GITHUB_PROVIDER" {
+variable "GIT_PROVIDER" {
   description = "Nome do provider do GitHub"
   type        = string
 }

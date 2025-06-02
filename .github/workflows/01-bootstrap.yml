@@ -26,20 +26,12 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: inspect env
-        run: |
-          echo "ENV_NAME: ${{ inputs.ENV_NAME }}"
-          echo "TF_VAR_PROJECT_NUMBER: ${{ vars.TF_VAR_PROJECT_NUMBER }}"
-          echo "TF_VAR_PROJECT_ID: ${{ vars.TF_VAR_PROJECT_ID }}"
-          echo "TF_VAR_GITHUB_POOL: ${{ vars.TF_VAR_GITHUB_POOL }}"
-          echo "TF_VAR_GITHUB_PROVIDER: ${{ vars.TF_VAR_GITHUB_PROVIDER }}"
-
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GITHUB_POOL }}/providers/${{ vars.TF_VAR_GITHUB_PROVIDER }}'
+          workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}'
           service_account: 'github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
 
       - name: Set up Terraform
