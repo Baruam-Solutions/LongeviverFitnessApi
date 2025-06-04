@@ -19,6 +19,23 @@ jobs:
   apply-infra-dev:
     runs-on: ubuntu-latest
     environment: ${{ inputs.ENV_NAME }}
+    env:
+      TF_VAR_PROJECT_ID: ${{ vars.TF_VAR_PROJECT_ID }}
+      TF_VAR_PROJECT_REGION: ${{ vars.TF_VAR_PROJECT_REGION }}
+      TF_VAR_DB_INSTANCE_NAME: ${{ vars.TF_VAR_DB_INSTANCE_NAME }}
+      TF_VAR_DATABASE: ${{ vars.TF_VAR_DATABASE }}
+      TF_VAR_DB_USERNAME: ${{ vars.TF_VAR_DB_USERNAME }}
+      TF_VAR_DB_PASSWORD: ${{ vars.TF_VAR_DB_PASSWORD }}
+      TF_VAR_DB_EDITION: ${{ vars.TF_VAR_DB_EDITION }}
+      TF_VAR_DB_VERSION: ${{ vars.TF_VAR_DB_VERSION }}
+      TF_VAR_DB_TIER: ${{ vars.TF_VAR_DB_TIER }}
+      TF_VAR_DB_DELETION_PROTECTION: ${{ vars.TF_VAR_DB_DELETION_PROTECTION }}
+      TF_VAR_GKE_CLUSTER_NAME: ${{ vars.TF_VAR_GKE_CLUSTER_NAME }}
+      TF_VAR_GKE_INITIAL_NODE_COUNT: ${{ vars.TF_VAR_GKE_INITIAL_NODE_COUNT }}
+      TF_VAR_GKE_NODE_MACHINE_TYPE: ${{ vars.TF_VAR_GKE_NODE_MACHINE_TYPE }}
+      TF_VAR_GKE_PREEMPTIBLE: ${{ vars.TF_VAR_GKE_PREEMPTIBLE }}
+      TF_VAR_GKE_NODE_POOL_NAME: ${{ vars.TF_VAR_GKE_NODE_POOL_NAME }}
+
     steps:
       # Checkout do código
       - name: Checkout source code
