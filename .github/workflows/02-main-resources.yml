@@ -12,6 +12,11 @@ on:
       GH_ACTIONS_SERVICE_ACCOUNT_EMAIL:
         required: true
         type: string
+    secrets:
+      TF_VAR_DB_USERNAME:
+        required: true
+      TF_VAR_DB_PASSWORD:
+        required: true
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
@@ -42,10 +47,6 @@ jobs:
       TF_VAR_GH_ACTIONS_SERVICE_ACCOUNT_EMAIL: ${{ inputs.GH_ACTIONS_SERVICE_ACCOUNT_EMAIL }}
 
     steps:
-      - name: exibe username
-        run: | 
-          echo "Username: ${{ env.TF_VAR_DB_USERNAME }}"
-          echo "Username: ${{ secrets.TF_VAR_DB_USERNAME }}"
       # Checkout do código
       - name: Checkout source code
         uses: actions/checkout@v4

@@ -31,3 +31,6 @@ jobs:
       TF_WORKDIR: infra/terraform/main-resources/
       ENV_NAME: ${{ github.event.inputs.environment }}
       GH_ACTIONS_SERVICE_ACCOUNT_EMAIL: ${{ needs.bootstrap.outputs.gh_actions_service_account_email }}
+    secrets:
+      TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
+      TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
