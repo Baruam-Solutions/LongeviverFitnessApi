@@ -28,8 +28,8 @@ jobs:
       TF_VAR_PROJECT_ZONE: ${{ vars.TF_VAR_PROJECT_ZONE }}
       TF_VAR_DB_INSTANCE_NAME: ${{ vars.TF_VAR_DB_INSTANCE_NAME }}
       TF_VAR_DATABASE: ${{ vars.TF_VAR_DATABASE }}
-      TF_VAR_DB_USERNAME: ${{ vars.TF_VAR_DB_USERNAME }}
-      TF_VAR_DB_PASSWORD: ${{ vars.TF_VAR_DB_PASSWORD }}
+      TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
+      TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
       TF_VAR_DB_EDITION: ${{ vars.TF_VAR_DB_EDITION }}
       TF_VAR_DB_VERSION: ${{ vars.TF_VAR_DB_VERSION }}
       TF_VAR_DB_TIER: ${{ vars.TF_VAR_DB_TIER }}
@@ -42,9 +42,6 @@ jobs:
       TF_VAR_GH_ACTIONS_SERVICE_ACCOUNT_EMAIL: ${{ inputs.GH_ACTIONS_SERVICE_ACCOUNT_EMAIL }}
 
     steps:
-      - name: Exibe TF_VAR_DB_USERNAME
-        run: echo "TF_VAR_DB_USERNAME=${{ env.TF_VAR_DB_USERNAME }}"
-
       # Checkout do código
       - name: Checkout source code
         uses: actions/checkout@v4
