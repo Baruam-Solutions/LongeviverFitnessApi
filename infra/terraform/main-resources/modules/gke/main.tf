@@ -36,9 +36,9 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     preemptible     = var.preemptible
     machine_type    = var.node_machine_type
     service_account = google_service_account.service_account_k8s.email
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform"
-    ]
+    # oauth_scopes = [
+    #   "https://www.googleapis.com/auth/cloud-platform"
+    # ]
     workload_metadata_config {
       mode = "GKE_METADATA"
     }

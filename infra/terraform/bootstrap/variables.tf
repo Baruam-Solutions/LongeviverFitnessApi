@@ -13,6 +13,11 @@ variable "PROJECT_ZONE" {
   type        = string
 }
 
+variable "PROJECT_NUMBER" {
+  description = "Número do projeto na cloud"
+  type        = string
+}
+
 variable "ARTIFACT_REGISTRY_REPOSITORY_NAME" {
   description = "Nome do repositório do Artifact Registry"
   type        = string

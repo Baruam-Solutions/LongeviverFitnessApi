@@ -17,6 +17,7 @@ module "gh_actions" {
   source                                = "./modules/gh_actions"
   project_id                            = var.PROJECT_ID
   project_region                        = var.PROJECT_REGION
+  project_number                        = var.PROJECT_NUMBER
   artifact_registry_repository_name     = module.artifact_repository.artifact_repository_id
   terraform_bootstrap_state_bucket_name = module.terraform_bootstrap_state_storage.bucket_name
   github_repo                           = var.GIT_REPO

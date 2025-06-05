@@ -8,6 +8,11 @@ variable "project_region" {
   type        = string
 }
 
+variable "project_number" {
+  description = "Número do projeto na cloud"
+  type        = string
+}
+
 variable "github_repo" {
   description = "Nome do repositório no GitHub"
   type        = string
