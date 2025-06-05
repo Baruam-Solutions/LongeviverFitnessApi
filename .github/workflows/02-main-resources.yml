@@ -42,6 +42,10 @@ jobs:
       TF_VAR_GH_ACTIONS_SERVICE_ACCOUNT_EMAIL: ${{ inputs.GH_ACTIONS_SERVICE_ACCOUNT_EMAIL }}
 
     steps:
+      - name: exibe username
+        run: | 
+          echo "Username: ${{ env.TF_VAR_DB_USERNAME }}"
+          echo "Username: ${{ secrets.TF_VAR_DB_USERNAME }}"
       # Checkout do código
       - name: Checkout source code
         uses: actions/checkout@v4

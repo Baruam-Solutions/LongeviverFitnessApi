@@ -69,8 +69,8 @@ resource "google_project_iam_member" "client_cloud_sql" {
 
 # cria um usuário para acessar o sql
 resource "google_sql_user" "postgres_user" {
-  name     = var.username
   instance = google_sql_database_instance.main.name
+  name     = var.username
   password = var.password
 
   depends_on = [google_sql_database_instance.main]
