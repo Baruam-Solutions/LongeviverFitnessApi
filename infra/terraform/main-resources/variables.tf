@@ -82,3 +82,8 @@ variable "GKE_PREEMPTIBLE" {
   type        = bool
   default     = false
 }
+
+variable "GH_ACTIONS_SERVICE_ACCOUNT_EMAIL" {
+    description = "Email da Service Account utilizada pelo GitHub Actions"
+    type        = string
+}

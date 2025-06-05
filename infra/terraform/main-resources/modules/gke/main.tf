@@ -11,6 +11,14 @@ resource "google_project_service" "kubernetes_api" {
   disable_on_destroy = false
 }
 
+# Permissão para o GitHub Actions usar a Service Account do K8s
+resource "google_service_account_iam_member" "github_sa_compute_default_user" {
+  depends_on = [ google_service_account.service_account_k8s ]
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${google_service_account.service_account_k8s.email}"
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${var.gh_actions_service_account_email}"
+}
+
 # Cria um cluster Kubernetes no GKE
 resource "google_container_cluster" "primary" {
   depends_on               = [google_project_service.kubernetes_api]

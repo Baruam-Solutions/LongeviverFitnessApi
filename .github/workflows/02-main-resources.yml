@@ -9,6 +9,9 @@ on:
       ENV_NAME:
         required: true
         type: string
+      GH_ACTIONS_SERVICE_ACCOUNT_EMAIL:
+        required: true
+        type: string
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
@@ -36,6 +39,7 @@ jobs:
       TF_VAR_GKE_NODE_MACHINE_TYPE: ${{ vars.TF_VAR_GKE_NODE_MACHINE_TYPE }}
       TF_VAR_GKE_PREEMPTIBLE: ${{ vars.TF_VAR_GKE_PREEMPTIBLE }}
       TF_VAR_GKE_NODE_POOL_NAME: ${{ vars.TF_VAR_GKE_NODE_POOL_NAME }}
+      TF_VAR_GH_ACTIONS_SERVICE_ACCOUNT_EMAIL: ${{ inputs.GH_ACTIONS_SERVICE_ACCOUNT_EMAIL }}
 
     steps:
       # Checkout do código

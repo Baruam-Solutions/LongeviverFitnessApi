@@ -11,6 +11,10 @@ on:
       ENV_NAME:
         required: true
         type: string
+    outputs:
+      gh_actions_service_account_email:
+        description: "Email da Service Account do GitHub Actions"
+        value: ${{ jobs.apply-bootstrap.outputs.tf_gh_actions_email }}
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
@@ -67,3 +71,13 @@ jobs:
         run: |
           cd ${{ inputs.TF_WORKDIR }}
           terraform apply -auto-approve tfplan
+
+      - name: Terraform Output gh_actions_service_account_email
+        working-directory: ${{ inputs.TF_WORKDIR }}
+        id: get_output_email # Adiciona um ID ao passo para capturar o output
+        run: |
+          GH_ACTIONS_EMAIL=$(terraform output -raw gh_actions_service_account_email)
+          echo "tf_gh_actions_email=${GH_ACTIONS_EMAIL}" >> $GITHUB_OUTPUT 
+
+    outputs:
+      tf_gh_actions_email: ${{ steps.get_output_email.outputs.tf_gh_actions_email }}

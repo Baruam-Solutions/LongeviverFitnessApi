@@ -13,12 +13,13 @@ module "rds" {
 }
 
 module "gke" {
-  source             = "./modules/gke"
-  project_id         = var.PROJECT_ID
-  cluster_location   = var.PROJECT_ZONE
-  cluster_name       = var.GKE_CLUSTER_NAME
-  node_machine_type  = var.GKE_NODE_MACHINE_TYPE
-  initial_node_count = var.GKE_INITIAL_NODE_COUNT
-  name_node_pool     = var.GKE_NODE_POOL_NAME
-  preemptible        = var.GKE_PREEMPTIBLE
+  source                     = "./modules/gke"
+  project_id                 = var.PROJECT_ID
+  cluster_location           = var.PROJECT_ZONE
+  cluster_name               = var.GKE_CLUSTER_NAME
+  node_machine_type          = var.GKE_NODE_MACHINE_TYPE
+  initial_node_count         = var.GKE_INITIAL_NODE_COUNT
+  name_node_pool             = var.GKE_NODE_POOL_NAME
+  preemptible                = var.GKE_PREEMPTIBLE
+  gh_actions_service_account_email = var.GH_ACTIONS_SERVICE_ACCOUNT_EMAIL
 }

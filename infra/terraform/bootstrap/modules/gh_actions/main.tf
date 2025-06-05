@@ -62,14 +62,6 @@ resource "google_iam_workload_identity_pool" "github_pool" {
   display_name              = "GitHub Actions Pool"
 }
 
-# Permissão para o GitHub Actions usar a Service Account padrão do Compute Engine.
-# todo: Talvez seja necessário alterar o service_account_id para o gke/main/service_account_k8s
-resource "google_service_account_iam_member" "github_sa_compute_default_user" {
-  service_account_id = "projects/${var.project_id}/serviceAccounts/${var.project_number}-compute@developer.gserviceaccount.com"
-  role               = "roles/iam.serviceAccountUser"
-  member             = "serviceAccount:${google_service_account.github_actions.email}"
-}
-
 # Permissão para gerenciar IAM em nível de projeto
 resource "google_project_iam_member" "github_sa_project_iam_admin" {
   project = var.project_id

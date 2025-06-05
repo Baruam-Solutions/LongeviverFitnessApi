@@ -34,3 +34,8 @@ variable "preemptible" {
   description = "Define se serão utilizadas máquinas mais baratas que podem ser encerradas pelo Google"
   type        = bool
 }
+
+variable "gh_actions_service_account_email" {
+  description = "Conta de serviço para o GitHub Actions"
+  type        = string
+}
