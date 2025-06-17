@@ -28,6 +28,11 @@ variable "K8S_CERTIFICATE_AUTHORITY" {
   type        = string
 }
 
+variable "K8S_SERVICE_ACCOUNT_NAME" {
+  description = "Nome do K8s service account"
+  type        = string
+}
+
 variable "DATABASE" {
   description = "Nome da base de dados para o projeto"
   type        = string
@@ -42,9 +47,4 @@ variable "DB_PASSWORD" {
   description = "Senha do usuário da base de dados"
   type        = string
   sensitive   = true
-}
-
-variable "K8S_SERVICE_ACCOUNT_NAME" {
-  description = "Nome do K8s service account"
-  type        = string
 }

@@ -24,13 +24,28 @@ jobs:
       ENV_NAME: ${{ github.event.inputs.environment }}
 
   # Job para aplicar a infraestrutura principal
-  infra:
+  main-resources:
     needs: [ bootstrap ]
     uses: ./.github/workflows/02-main-resources.yml
     with:
       TF_WORKDIR: infra/terraform/main-resources/
       ENV_NAME: ${{ github.event.inputs.environment }}
       GH_ACTIONS_SERVICE_ACCOUNT_EMAIL: ${{ needs.bootstrap.outputs.gh_actions_service_account_email }}
+    secrets:
+      TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
+      TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
+
+  # Job para aplicar a camada de Kubernetes
+  k8s:
+    needs: [ main-resources ]
+    uses: ./.github/workflows/03-k8s.yml
+    with:
+      TF_WORKDIR: infra/terraform/main-resources/
+      ENV_NAME: ${{ github.event.inputs.environment }}
+      K8S_SERVICE_ACCOUNT_EMAIL: ${{ needs.main-resources.outputs.k8s_service_account_email }}
+      K8S_SERVICE_ACCOUNT_NAME: ${{ needs.main-resources.outputs.k8s_service_account_name }}
+      K8S_ENDPOINT: ${{ needs.main-resources.outputs.k8s_endpoint }}
+      K8S_CERTIFICATE_AUTHORITY: ${{ needs.main-resources.outputs.k8s_certificate_authority }}
     secrets:
       TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}

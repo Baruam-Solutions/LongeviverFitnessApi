@@ -1,4 +1,4 @@
-name: Workflow para a recursos principais
+name: Workflow para a camada de Kubernetes
 
 on:
   workflow_call:
@@ -9,7 +9,16 @@ on:
       ENV_NAME:
         required: true
         type: string
-      GH_ACTIONS_SERVICE_ACCOUNT_EMAIL:
+      K8S_SERVICE_ACCOUNT_EMAIL:
+        required: true
+        type: string
+      K8S_ENDPOINT: 
+        required: true
+        type: string
+      K8S_CERTIFICATE_AUTHORITY:
+        required: true
+        type: string
+      K8S_SERVICE_ACCOUNT_NAME:
         required: true
         type: string
     secrets:
@@ -31,20 +40,13 @@ jobs:
       TF_VAR_PROJECT_ID: ${{ vars.TF_VAR_PROJECT_ID }}
       TF_VAR_PROJECT_REGION: ${{ vars.TF_VAR_PROJECT_REGION }}
       TF_VAR_PROJECT_ZONE: ${{ vars.TF_VAR_PROJECT_ZONE }}
-      TF_VAR_DB_INSTANCE_NAME: ${{ vars.TF_VAR_DB_INSTANCE_NAME }}
       TF_VAR_DATABASE: ${{ vars.TF_VAR_DATABASE }}
       TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
-      TF_VAR_DB_EDITION: ${{ vars.TF_VAR_DB_EDITION }}
-      TF_VAR_DB_VERSION: ${{ vars.TF_VAR_DB_VERSION }}
-      TF_VAR_DB_TIER: ${{ vars.TF_VAR_DB_TIER }}
-      TF_VAR_DB_DELETION_PROTECTION: ${{ vars.TF_VAR_DB_DELETION_PROTECTION }}
-      TF_VAR_GKE_CLUSTER_NAME: ${{ vars.TF_VAR_GKE_CLUSTER_NAME }}
-      TF_VAR_GKE_INITIAL_NODE_COUNT: ${{ vars.TF_VAR_GKE_INITIAL_NODE_COUNT }}
-      TF_VAR_GKE_NODE_MACHINE_TYPE: ${{ vars.TF_VAR_GKE_NODE_MACHINE_TYPE }}
-      TF_VAR_GKE_PREEMPTIBLE: ${{ vars.TF_VAR_GKE_PREEMPTIBLE }}
-      TF_VAR_GKE_NODE_POOL_NAME: ${{ vars.TF_VAR_GKE_NODE_POOL_NAME }}
-      TF_VAR_GH_ACTIONS_SERVICE_ACCOUNT_EMAIL: ${{ inputs.GH_ACTIONS_SERVICE_ACCOUNT_EMAIL }}
+      TF_VAR_K8S_SERVICE_ACCOUNT_EMAIL: ${{ inputs.K8S_SERVICE_ACCOUNT_EMAIL }}
+      TF_VAR_K8S_ENDPOINT: ${{ inputs.K8S_ENDPOINT }}
+      TF_VAR_K8S_CERTIFICATE_AUTHORITY: ${{ inputs.K8S_CERTIFICATE_AUTHORITY }}
+      TF_VAR_K8S_SERVICE_ACCOUNT_NAME: ${{ inputs.K8S_SERVICE_ACCOUNT_NAME }}
 
     steps:
       # Checkout do código
