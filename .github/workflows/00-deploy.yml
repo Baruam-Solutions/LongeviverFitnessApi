@@ -40,7 +40,7 @@ jobs:
     needs: [ main-resources ]
     uses: ./.github/workflows/03-k8s.yml
     with:
-      TF_WORKDIR: infra/terraform/main-resources/
+      TF_WORKDIR: infra/terraform/k8s/
       ENV_NAME: ${{ github.event.inputs.environment }}
       K8S_SERVICE_ACCOUNT_EMAIL: ${{ needs.main-resources.outputs.k8s_service_account_email }}
       K8S_SERVICE_ACCOUNT_NAME: ${{ needs.main-resources.outputs.k8s_service_account_name }}

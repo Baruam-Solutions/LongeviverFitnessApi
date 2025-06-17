@@ -33,7 +33,7 @@ permissions:
   contents: read
 
 jobs:
-  apply-infra-dev:
+  apply:
     runs-on: ubuntu-latest
     environment: ${{ inputs.ENV_NAME }}
     env:
