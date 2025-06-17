@@ -17,6 +17,19 @@ on:
         required: true
       TF_VAR_DB_PASSWORD:
         required: true
+    outputs:
+      k8s_service_account_email:
+        description: "Email da Service Account do Kubernetes"
+        value: ${{ jobs.apply.outputs.tf_k8s_service_account_email }}
+      k8s_service_account_name:
+        description: "Nome da Service Account do Kubernetes"
+        value: ${{ jobs.apply.outputs.tf_k8s_service_account_name }}
+      k8s_endpoint:
+        description: "Endpoint do cluster Kubernetes"
+        value: ${{ jobs.apply.outputs.tf_k8s_endpoint }}
+      k8s_certificate_authority:
+        description: "Certificado de autoridade do cluster Kubernetes"
+        value: ${{ jobs.apply.outputs.tf_k8s_certificate_authority }}
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
