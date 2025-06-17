@@ -83,3 +83,25 @@ jobs:
         run: |
           cd ${{ inputs.TF_WORKDIR }}
           terraform apply -auto-approve tfplan
+
+      - name: Terraform Outputs
+        working-directory: ${{ inputs.TF_WORKDIR }}
+        id: get_outputs # Adiciona um ID ao passo para capturar o output
+        run: |
+          K8S_SERVICE_ACCOUNT_EMAIL=$(terraform output -raw k8s_service_account_email)
+          echo "tf_k8s_service_account_email=${K8S_SERVICE_ACCOUNT_EMAIL}" >> $GITHUB_OUTPUT
+          
+          K8S_SERVICE_ACCOUNT_NAME=$(terraform output -raw k8s_service_account_name)
+          echo "tf_k8s_service_account_name=${K8S_SERVICE_ACCOUNT_NAME}" >> $GITHUB_OUTPUT
+          
+          K8S_ENDPOINT=$(terraform output -raw k8s_endpoint)
+          echo "tf_k8s_endpoint=${K8S_ENDPOINT}" >> $GITHUB_OUTPUT
+          
+          K8S_CERTIFICATE_AUTHORITY=$(terraform output -raw k8s_certificate_authority)
+          echo "tf_k8s_certificate_authority=${K8S_CERTIFICATE_AUTHORITY}" >> $GITHUB_OUTPUT
+
+    outputs:
+      tf_k8s_service_account_email: ${{ steps.get_outputs.outputs.tf_k8s_service_account_email }}
+      tf_k8s_service_account_name: ${{ steps.get_outputs.outputs.tf_k8s_service_account_name }}
+      tf_k8s_endpoint: ${{ steps.get_outputs.outputs.tf_k8s_endpoint }}
+      tf_k8s_certificate_authority: ${{ steps.get_outputs.outputs.tf_k8s_certificate_authority }}
