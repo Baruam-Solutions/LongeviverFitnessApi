@@ -14,7 +14,7 @@ on:
     outputs:
       gh_actions_service_account_email:
         description: "Email da Service Account do GitHub Actions"
-        value: ${{ jobs.apply-bootstrap.outputs.tf_gh_actions_email }}
+        value: ${{ jobs.apply.outputs.tf_gh_actions_email }}
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
