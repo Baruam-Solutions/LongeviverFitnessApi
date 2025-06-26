@@ -26,7 +26,7 @@ resource "google_service_account_iam_member" "github_sa_compute_default_user" {
 
 # Permissão para o GitHub Actions usar a Service Account do Compute Engine
 resource "google_service_account_iam_member" "github_sa_as_compute_sa_user" {
-  service_account_id = data.google_compute_default_service_account.default_compute_sa.email
+  service_account_id = data.google_compute_default_service_account.default_compute_sa.id
   role               = "roles/iam.serviceAccountUser"
   member             = "serviceAccount:${var.gh_actions_service_account_email}"
 }
