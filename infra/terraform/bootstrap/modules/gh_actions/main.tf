@@ -55,6 +55,13 @@ resource "google_project_iam_member" "github_sa_workload_identity_user" {
   member  = "serviceAccount:${google_service_account.github_actions.email}"
 }
 
+# IAM para o GitHub Actions permissão de Service Usage Admin para habilitar as API
+resource "google_project_iam_member" "github_sa_service_usage_admin" {
+  project = var.project_id
+  role    = "roles/serviceusage.serviceUsageAdmin"
+  member  = "serviceAccount:${google_service_account.github_actions.email}"
+}
+
 # Workload Identity Pool para o GitHub Actions
 resource "google_iam_workload_identity_pool" "github_pool" {
   project                   = var.project_id
