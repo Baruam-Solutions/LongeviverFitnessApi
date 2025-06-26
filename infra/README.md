@@ -51,6 +51,15 @@ Para definir o projeto padrão a ser utilizado, utilize o comando:
 gcloud config set project[PROJECT_ID]
 ```
 
+Também pode ser necessário definir o projeto de quota, uma vez que 
+ja foi configurado outro projeto anteriormente:
+
+```bash
+gcloud auth application-default set-quota-project [PROJECT_ID]
+```
+Caso um erro ocorra ao executar o comando acima, verifique se o papel "serviceusage.services.use" foi atribuído ao usuário do projeto.
+Pode ser verificado na página do IAM & Admin > IAM no console do GCP, se o papel "Administrador do Service Usage" está atribuído. 
+
 ## k8s
 
 Armazena os manifests do Kubernetes (YAML) para deployment, serviços, configmaps, etc.
