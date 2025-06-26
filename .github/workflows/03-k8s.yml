@@ -43,10 +43,8 @@ jobs:
       TF_VAR_DATABASE: ${{ vars.TF_VAR_DATABASE }}
       TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
-#      TF_VAR_K8S_SERVICE_ACCOUNT_EMAIL: ${{ base64_decode(fromJson(format('"%s"', inputs.K8S_SERVICE_ACCOUNT_EMAIL))) }}
       TF_VAR_K8S_ENDPOINT: ${{ inputs.K8S_ENDPOINT }}
       TF_VAR_K8S_CERTIFICATE_AUTHORITY: ${{ inputs.K8S_CERTIFICATE_AUTHORITY }}
-#      TF_VAR_K8S_SERVICE_ACCOUNT_NAME: ${{ base64_decode(fromJson(format('"%s"', inputs.K8S_SERVICE_ACCOUNT_NAME))) }}
 
     steps:
       # Checkout do código
@@ -61,7 +59,7 @@ jobs:
           workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}'
           service_account: 'github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
 
-      - name: Decode K8s Service Account details
+      - name: Decode K8s Service Account details #TODO: TENTAR REMOVER ENCODING E DECODING BASE64
         run: |
           # Decodifica o email e exporta como variável de ambiente
           DECODED_EMAIL=$(echo "${{ inputs.K8S_SERVICE_ACCOUNT_EMAIL }}" | base64 --decode)
