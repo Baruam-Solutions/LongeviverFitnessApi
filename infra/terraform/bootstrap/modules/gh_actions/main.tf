@@ -23,7 +23,7 @@ resource "google_project_iam_member" "github_sa_project_viewer" {
 # IAM para o GitHub Actions permissão de leitura no bucket para o Terraform State
 resource "google_storage_bucket_iam_member" "terraform_backend_writer_reader" {
   bucket = var.terraform_bootstrap_state_bucket_name
-  role   = "roles/storage.admin"
+  role   = "roles/storage.objectAdmin"
   member = "serviceAccount:${google_service_account.github_actions.email}"
 }
 
