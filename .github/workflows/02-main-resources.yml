@@ -101,10 +101,10 @@ jobs:
         working-directory: ${{ inputs.TF_WORKDIR }}
         id: get_outputs # Adiciona um ID ao passo para capturar o output
         run: |
-          K8S_SERVICE_ACCOUNT_EMAIL=$(terraform output -raw k8s_service_account_email)
+          K8S_SERVICE_ACCOUNT_EMAIL=$(terraform output -raw k8s_service_account_email | base64 -w 0)
           echo "tf_k8s_service_account_email=${K8S_SERVICE_ACCOUNT_EMAIL}" >> $GITHUB_OUTPUT
           
-          K8S_SERVICE_ACCOUNT_NAME=$(terraform output -raw k8s_service_account_name)
+          K8S_SERVICE_ACCOUNT_NAME=$(terraform output -raw k8s_service_account_name | base64 -w 0)
           echo "tf_k8s_service_account_name=${K8S_SERVICE_ACCOUNT_NAME}" >> $GITHUB_OUTPUT
           
           K8S_ENDPOINT=$(terraform output -raw k8s_endpoint)
