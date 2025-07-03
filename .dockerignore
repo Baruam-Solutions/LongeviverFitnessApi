@@ -1,0 +1,46 @@
+# Ignorar controle de versão e workflows
+.git
+.github
+
+# Ignorar configurações de IDE e editor
+.idea
+*.iml
+
+# Ignorar arquivos de build
+target
+
+# Ignorar binários do Maven Wrapper (pode manter o properties se necessário)
+.mvn
+mvnw
+mvnw.cmd
+
+# Ignorar infraestrutura (Terraform, K8s)
+infra
+
+# Ignorar testes
+src/test
+
+# Ignorar arquivos temporários
+*.swp
+*.swo
+*.bak
+*~
+
+# Ignorar logs
+*.log
+
+# Ignorar arquivos locais de configuração
+*.local
+*.env
+
+# Ignorar arquivos de documentação e markdown que não são necessários no container
+*.md
+HELP.md
+README.md
+teste.xml
+
+# Caso use Node ou algo similar localmente
+node_modules
+npm-debug.log
+yarn.lock
+pnpm-lock.yaml

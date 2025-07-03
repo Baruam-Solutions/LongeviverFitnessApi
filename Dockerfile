@@ -1,18 +1,17 @@
-FROM maven:3.8.7-eclipse-temurin-19 AS build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+
+WORKDIR /app
 
 COPY src /app/src
 COPY pom.xml /app
 
-WORKDIR /app
-
 RUN mvn clean package -DskipTests
 
-#todo trocar por JRE
-FROM openjdk:21-jdk
-
-COPY --from=build /app/target/longeviverfitness-0.0.1-SNAPSHOT.jar /app/app.jar
+FROM openjdk:21-slim
 
 WORKDIR /app
+
+COPY --from=build /app/target/longeviverfitness-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
