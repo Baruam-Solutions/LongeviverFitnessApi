@@ -49,3 +49,9 @@ jobs:
     secrets:
       TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
+
+  build:
+    needs: [ k8s ]
+    uses: ./.github/workflows/04-build.yml
+    with:
+      ENV_NAME: ${{ github.event.inputs.environment }}

@@ -1,0 +1,57 @@
+name: Workflow para teste, build e push de imagens Docker
+on:
+  workflow_call:
+    inputs:
+      ENV_NAME:
+        required: true
+        type: string
+
+# Ativa o uso de OIDC no workflow do GitHub Actions
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENV_NAME }}
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Rodar Testes com Maven
+        run: mvn test
+
+      - name: Construir Aplicação com Maven
+        run: mvn clean install -DskipTest
+
+      - name: Construir Imagem Docker
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: longeviver:${{ github.sha }}:latest
+
+      # Autenticação com Google Cloud usando Workload Identity Federation
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}'
+          service_account: 'github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
+
+      # Configurar Docker para usar gcloud como helper de credenciais
+      - name: Configure Docker with Artifact Registry
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      # Push da imagem Docker
+      - name: Push Docker image
+        run: |
+          docker push longeviver:${{ github.sha }}:latest

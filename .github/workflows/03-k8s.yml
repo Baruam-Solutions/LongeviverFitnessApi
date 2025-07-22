@@ -59,7 +59,7 @@ jobs:
           workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}'
           service_account: 'github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
 
-      - name: Decode K8s Service Account details #TODO: TENTAR REMOVER ENCODING E DECODING BASE64
+      - name: Decode K8s Service Account details
         run: |
           # Decodifica o email e exporta como variável de ambiente
           DECODED_EMAIL=$(echo "${{ inputs.K8S_SERVICE_ACCOUNT_EMAIL }}" | base64 --decode)
