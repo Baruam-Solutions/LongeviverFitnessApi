@@ -144,12 +144,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>11.10.3</version>
-        </dependency>
-
     </dependencies>
 
     <build>

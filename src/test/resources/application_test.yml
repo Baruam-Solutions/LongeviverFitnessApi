@@ -3,8 +3,6 @@ spring:
     active: test
   application:
     name: longeviverfitness
-  flyway:
-    enabled: false
   datasource:
     hikari:
       driver-class-name: org.h2.Driver
