@@ -30,7 +30,7 @@ jobs:
         run: mvn test
 
       - name: Construir Aplicação com Maven
-        run: mvn clean install -DskipTest
+        run: mvn clean install -DskipTests=true
 
       - name: Construir Imagem Docker
         uses: docker/build-push-action@v5

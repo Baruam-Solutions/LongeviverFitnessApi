@@ -33,9 +33,6 @@ build/
 .vscode/
 
 
-src/main/resources/application.yml
-src/test/resources/application.yml
-
 src/main/resources/app.key
 src/main/resources/app.pub
 /infra/terraform/.terraform.lock.hcl

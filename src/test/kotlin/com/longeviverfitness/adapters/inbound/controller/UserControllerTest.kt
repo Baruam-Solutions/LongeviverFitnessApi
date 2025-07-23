@@ -13,7 +13,6 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -23,10 +22,9 @@ import org.springframework.web.servlet.ViewResolver
 import java.util.*
 
 @SpringBootTest
-@TestPropertySource(locations = ["classpath:application_test.yml"])
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
-class ProdutoAgricolControllerTest {
+class UserControllerTest {
 
     @Autowired
     private lateinit var userController: UserController
