@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ViewResolver
 import java.util.*
 
 @SpringBootTest
-@TestPropertySource(locations = ["classpath:application-test.yml"])
+@TestPropertySource(locations = ["classpath:application_test.yml"])
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 class ProdutoAgricolControllerTest {
