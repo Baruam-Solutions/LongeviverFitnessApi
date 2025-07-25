@@ -2,10 +2,10 @@ server:
   port: 8080
 
 spring:
+  profiles:
+    active: dev
   application:
     name: longeviverfitness
-    profiles:
-      active: dev
 
   datasource:
     url: ${DB_URL}
