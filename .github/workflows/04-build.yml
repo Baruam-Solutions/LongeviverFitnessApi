@@ -54,4 +54,4 @@ jobs:
       # Push da imagem Docker
       - name: Push Docker image
         run: |
-          docker push longeviver:${{ github.sha }}:latest
+          docker push longeviver:${{ github.sha_short }}
