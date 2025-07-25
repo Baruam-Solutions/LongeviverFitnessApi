@@ -37,7 +37,7 @@ jobs:
         with:
           context: .
           push: false
-          tags: longeviver:${{ github.sha_short }}
+          tags: longeviver:${{ github.sha }}
 
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
@@ -54,4 +54,4 @@ jobs:
       # Push da imagem Docker
       - name: Push Docker image
         run: |
-          docker push longeviver:${{ github.sha_short }}
+          docker push longeviver:${{ github.sha }}
