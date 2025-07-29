@@ -40,6 +40,9 @@ jobs:
       - name: Construir Aplicação com Maven
         run: mvn clean install -DskipTests=true
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Construir Imagem Docker
         uses: docker/build-push-action@v5
         with:
