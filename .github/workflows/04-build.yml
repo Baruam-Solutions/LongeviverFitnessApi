@@ -46,6 +46,8 @@ jobs:
           context: .
           push: false
           tags: ${{ vars.TF_VAR_PROJECT_REGION }}-docker.pkg.dev/${{ vars.TF_VAR_PROJECT_ID }}/${{ vars.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}/longeviver:${{ github.sha }}
+          cache-from: type=gha # Habilita o cache de camadas do GitHub Actions
+          cache-to: type=gha,mode=max # Salva o cache para futuras execuções
 
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: 'auth'
