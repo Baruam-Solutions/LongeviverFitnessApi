@@ -40,6 +40,7 @@ jobs:
       - name: Construir Aplicação com Maven
         run: mvn clean install -DskipTests=true
 
+      # Configura o ambiente para o Docker Buildx e, por padrão, cria um builder com um driver que suporta os recursos avançados de cache
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -48,6 +49,7 @@ jobs:
         with:
           context: .
           push: false
+          load: true # Carregar a imagem no daemon Docker local
           tags: ${{ vars.TF_VAR_PROJECT_REGION }}-docker.pkg.dev/${{ vars.TF_VAR_PROJECT_ID }}/${{ vars.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}/longeviver:${{ github.sha }}
           cache-from: type=gha # Habilita o cache de camadas do GitHub Actions
           cache-to: type=gha,mode=max # Salva o cache para futuras execuções
@@ -62,7 +64,7 @@ jobs:
 
       # Configurar Docker para usar gcloud como helper de credenciais
       - name: Configure Docker with Artifact Registry
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+        run: gcloud auth configure-docker ${{ vars.TF_VAR_PROJECT_REGION }}-docker.pkg.dev
 
       # Push da imagem Docker
       - name: Push Docker image
