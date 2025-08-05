@@ -49,12 +49,16 @@ jobs:
           DECODED_NAME=$(echo "${{ inputs.K8S_SERVICE_ACCOUNT_NAME }}" | base64 --decode)
           echo "TF_VAR_K8S_SERVICE_ACCOUNT_NAME=${DECODED_NAME}" >> $GITHUB_ENV
 
+          # Decodifica o namespace do Kubernetes e exporta como variável de ambiente
+          DECODED_NAMESPACE=$(echo "${{ inputs.K8S_NAMESPACE }}" | base64 --decode)
+          echo "TF_VAR_K8S_NAMESPACE=${DECODED_NAMESPACE}" >> $GITHUB_ENV
+
       - name: Substituir variáveis de ambiente no arquivo deployment.yaml e service.yaml
         run: |
-            sed -i 's|${K8S_NAMESPACE}|${{ inputs.K8S_NAMESPACE }}|g'   service.yaml
-            sed -i 's|${K8S_NAMESPACE}|${{ inputs.K8S_NAMESPACE }}|g'   deployment.yaml
-            sed -i 's|${GCP_SERVICE_ACCOUNT_NAME}|${{ vars.TF_VAR_K8S_SERVICE_ACCOUNT_NAME }}|g' deployment.yaml
-            sed -i 's|${GCP_SERVICE_ACCOUNT}|${{ vars.TF_VAR_K8S_SERVICE_ACCOUNT_EMAIL }}|g'     deployment.yaml
+            sed -i 's|${K8S_NAMESPACE}|${{ env.TF_VAR_K8S_NAMESPACE }}|g'   service.yaml
+            sed -i 's|${K8S_NAMESPACE}|${{ env.TF_VAR_K8S_NAMESPACE }}|g'   deployment.yaml
+            sed -i 's|${GCP_SERVICE_ACCOUNT_NAME}|${{ env.TF_VAR_K8S_SERVICE_ACCOUNT_NAME }}|g' deployment.yaml
+            sed -i 's|${GCP_SERVICE_ACCOUNT}|${{ env.TF_VAR_K8S_SERVICE_ACCOUNT_EMAIL }}|g'     deployment.yaml
             sed -i 's|${DOCKER_IMAGE}| ${{ vars.TF_VAR_PROJECT_REGION }}-docker.pkg.dev/${{ vars.TF_VAR_PROJECT_ID }}/${{ vars.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}/longeviver:${{ github.sha }}|g' deployment.yaml
         working-directory: ${{ inputs.K8S_WORKDIR}}
 

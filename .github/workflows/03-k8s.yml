@@ -98,5 +98,12 @@ jobs:
           cd ${{ inputs.TF_WORKDIR }}
           terraform apply -auto-approve tfplan
 
+      - name: Terraform Outputs
+        working-directory: ${{ inputs.TF_WORKDIR }}
+        id: get_outputs # Adiciona um ID ao passo para capturar o output
+        run: |
+          K8S_NAMESPACE=$(terraform output -raw k8s_namespace | base64 -w 0)
+          echo "tf_k8s_namespace=${K8S_NAMESPACE}" >> $GITHUB_OUTPUT
+
     outputs:
       tf_k8s_namespace: ${{ steps.get_outputs.outputs.tf_k8s_namespace }}
