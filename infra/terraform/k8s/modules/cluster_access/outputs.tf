@@ -1,4 +1,4 @@
-output "cluster_namespace" {
+output "k8s_namespace" {
   value = kubernetes_namespace.cluster_namespace.metadata[0].name
 }
 

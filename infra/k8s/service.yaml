@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: longeviver-fitness-app
+  name: longeviver-gke
+  namespace: ${K8S_NAMESPACE}
+  annotations:
+    cloud.google.com/load-balancer-type: "External"
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
-    app: longeviver-fitness-app
+    app: longeviver-gke
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 8080
-      nodePort: 30007

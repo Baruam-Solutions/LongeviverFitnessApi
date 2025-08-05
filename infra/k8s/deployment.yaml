@@ -1,43 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gke-cloud-sql-quickstart
+  name: longeviver-gke
+  namespace: ${K8S_NAMESPACE} # longeviver-dev-mateus-455600-namespace
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: gke-cloud-sql-app
+      app: longeviver-gke
   template:
     metadata:
+      annotations:
+        iam.gke.io/gcp-service-account: ${GCP_SERVICE_ACCOUNT}  # k8s-service-account@longeviver-dev-mateus-455600.iam.gserviceaccount.com
       labels:
-        app: gke-cloud-sql-app
+        app: longeviver-gke
     spec:
-      serviceAccountName: ksa-cloud-sql
+      serviceAccountName: ${GCP_SERVICE_ACCOUNT_NAME} # longeviver-dev-mateus-455600-ksa
       containers:
-        - name: gke-cloud-sql-app
-          image: us-central1-docker.pkg.dev/longeviver-dev-franciel/gke-cloud-sql-repo/gke-sql:latest
+        - name: longeviver-gke
+          image: ${DOCKER_IMAGE} # us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:v100
           ports:
             - containerPort: 8080
-          env:
-            - name: PORT
-              value: "8080"
-            - name: INSTANCE_CONNECTION_NAME
-              value: <INSTANCE_CONNECTION_NAME>
-            - name: DB_HOST
-              value: "127.0.0.1"
-            - name: DB_PORT
-              value: "5432"
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: gke-cloud-sql-secrets
-                  key: username
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: gke-cloud-sql-secrets
-                  key: password
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: gke-cloud-sql-secrets
-                  key: database
+      imagePullSecrets:
+        - name: artifact-registry-secret

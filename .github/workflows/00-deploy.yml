@@ -50,8 +50,20 @@ jobs:
       TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
 
+  # Job para buildar a imagem e enviar para o Artifact Registry
   build:
     needs: [ k8s ]
     uses: ./.github/workflows/04-build.yml
     with:
       ENV_NAME: ${{ github.event.inputs.environment }}
+
+  # Job para fazer o deploy no GKE
+  deploy-k8s:
+    needs: [ build, main-resources, k8s ]
+    uses: ./.github/workflows/05-deploy-to-gke.yml
+    with:
+      ENV_NAME: ${{ github.event.inputs.environment }}
+      K8S_WORKDIR: infra/k8s/
+      K8S_SERVICE_ACCOUNT_EMAIL: ${{ needs.main-resources.outputs.k8s_service_account_email }}
+      K8S_SERVICE_ACCOUNT_NAME: ${{ needs.main-resources.outputs.k8s_service_account_name }}
+      K8S_NAMESPACE: ${{ needs.k8s.outputs.k8s_namespace }}

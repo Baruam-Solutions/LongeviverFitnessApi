@@ -1,0 +1,64 @@
+name: Deploy to GKE
+on:
+  workflow_call:
+    inputs:
+      ENV_NAME:
+        required: true
+        type: string
+      K8S_WORKDIR:
+        required: true
+        type: string
+      K8S_SERVICE_ACCOUNT_EMAIL:
+        required: true
+        type: string
+      K8S_SERVICE_ACCOUNT_NAME:
+        required: true
+        type: string
+      K8S_NAMESPACE:
+        required: true
+        type: string
+
+# Ativa o uso de OIDC no workflow do GitHub Actions
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENV_NAME }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Autenticação com Google Cloud usando Workload Identity Federation
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}'
+          service_account: 'github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
+
+      - name: Substituir variáveis de ambiente no arquivo deployment.yaml e service.yaml
+        run: |
+            sed -i 's|${K8S_NAMESPACE}|${{ inputs.K8S_NAMESPACE }}|g' service.yaml
+            sed -i 's|${K8S_NAMESPACE}|${{ vars.K8S_NAMESPACE }}|g'   deployment.yaml
+            sed -i 's|${DOCKER_IMAGE}|${{ inputs.DOCKER_IMAGE }}|g'   deployment.yaml
+            sed -i 's|${GCP_SERVICE_ACCOUNT}|${{ inputs.K8S_SERVICE_ACCOUNT_EMAIL }}|g'     deployment.yaml
+            sed -i 's|${GCP_SERVICE_ACCOUNT_NAME}| ${{ vars.TF_VAR_PROJECT_REGION }}-docker.pkg.dev/${{ vars.TF_VAR_PROJECT_ID }}/${{ vars.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}/longeviver:${{ github.sha }}|g' deployment.yaml
+        working-directory: $${{ inputs.K8S_WORKDIR}}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials "${{ vars.TF_VAR_GKE_CLUSTER_NAME }}" \
+            --zone "${{ vars.TF_VAR_PROJECT_ZONE }}" \
+            --project "${{ vars.TF_VAR_PROJECT_ID }}"
+
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+        working-directory: $${{ inputs.K8S_WORKDIR}}
