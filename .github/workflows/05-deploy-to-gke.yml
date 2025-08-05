@@ -46,7 +46,7 @@ jobs:
             sed -i 's|${DOCKER_IMAGE}|${{ inputs.DOCKER_IMAGE }}|g'   deployment.yaml
             sed -i 's|${GCP_SERVICE_ACCOUNT}|${{ inputs.K8S_SERVICE_ACCOUNT_EMAIL }}|g'     deployment.yaml
             sed -i 's|${GCP_SERVICE_ACCOUNT_NAME}| ${{ vars.TF_VAR_PROJECT_REGION }}-docker.pkg.dev/${{ vars.TF_VAR_PROJECT_ID }}/${{ vars.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}/longeviver:${{ github.sha }}|g' deployment.yaml
-        working-directory: $${{ inputs.K8S_WORKDIR}}
+        working-directory: ${{ inputs.K8S_WORKDIR}}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
