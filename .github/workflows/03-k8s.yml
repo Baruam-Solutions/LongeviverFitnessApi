@@ -26,6 +26,10 @@ on:
         required: true
       TF_VAR_DB_PASSWORD:
         required: true
+    outputs:
+      k8s_namespace:
+        description: "Namespace do Kubernetes"
+        value: ${{ jobs.apply.outputs.tf_k8s_namespace }}
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
@@ -93,3 +97,6 @@ jobs:
         run: |
           cd ${{ inputs.TF_WORKDIR }}
           terraform apply -auto-approve tfplan
+
+    outputs:
+      tf_k8s_namespace: ${{ steps.get_outputs.outputs.tf_k8s_namespace }}
