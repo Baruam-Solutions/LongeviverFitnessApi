@@ -61,6 +61,10 @@ jobs:
             sed -i 's|${DOCKER_IMAGE}| ${{ vars.TF_VAR_PROJECT_REGION }}-docker.pkg.dev/${{ vars.TF_VAR_PROJECT_ID }}/${{ vars.TF_VAR_ARTIFACT_REGISTRY_REPOSITORY_NAME }}/longeviver:${{ github.sha }}|g' deployment.yaml
         working-directory: ${{ inputs.K8S_WORKDIR}}
 
+      - name: Install gke-gcloud-auth-plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin
+
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials "${{ vars.TF_VAR_GKE_CLUSTER_NAME }}" \
