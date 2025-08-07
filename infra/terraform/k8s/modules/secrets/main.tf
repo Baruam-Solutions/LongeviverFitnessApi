@@ -7,5 +7,6 @@ resource "kubernetes_secret" "gke-cloud-sql-secrets" {
     database = var.database
     username = var.username
     password = var.password
+    db_host  = var.db_host
   }
 }

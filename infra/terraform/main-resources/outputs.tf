@@ -13,3 +13,7 @@ output "k8s_endpoint" {
 output "k8s_certificate_authority" {
   value = module.gke.cluster_ca_certificate
 }
+
+output "db_host" {
+  value = module.rds.db_host
+}

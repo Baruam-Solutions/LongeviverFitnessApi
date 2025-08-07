@@ -46,6 +46,7 @@ jobs:
       K8S_SERVICE_ACCOUNT_NAME: ${{ needs.main-resources.outputs.k8s_service_account_name }}
       K8S_ENDPOINT: ${{ needs.main-resources.outputs.k8s_endpoint }}
       K8S_CERTIFICATE_AUTHORITY: ${{ needs.main-resources.outputs.k8s_certificate_authority }}
+      DB_HOST: ${{ needs.main-resources.outputs.tf_db_host }}
     secrets:
       TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}

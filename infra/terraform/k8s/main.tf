@@ -10,5 +10,6 @@ module "secrets" {
   database          = var.DATABASE
   username          = var.DB_USERNAME
   password          = var.DB_PASSWORD
+  db_host           = var.DB_HOST
   cluster_namespace = module.cluster_access.k8s_namespace
 }

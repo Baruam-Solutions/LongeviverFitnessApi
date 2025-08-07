@@ -21,6 +21,9 @@ on:
       K8S_SERVICE_ACCOUNT_NAME:
         required: true
         type: string
+      DB_HOST:
+        required: true
+        type: string
     secrets:
       TF_VAR_DB_USERNAME:
         required: true
@@ -50,6 +53,7 @@ jobs:
       TF_VAR_DATABASE: ${{ vars.TF_VAR_DATABASE }}
       TF_VAR_DB_USERNAME: ${{ secrets.TF_VAR_DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
+      TF_VAR_DB_HOST: ${{ inputs.DB_HOST }}
       TF_VAR_K8S_ENDPOINT: ${{ inputs.K8S_ENDPOINT }}
       TF_VAR_K8S_CERTIFICATE_AUTHORITY: ${{ inputs.K8S_CERTIFICATE_AUTHORITY }}
 

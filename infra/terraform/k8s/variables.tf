@@ -48,3 +48,9 @@ variable "DB_PASSWORD" {
   type        = string
   sensitive   = true
 }
+
+variable "DB_HOST" {
+  description = "Host do banco de dados"
+  type        = string
+  sensitive   = true
+}

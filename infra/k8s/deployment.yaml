@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: longeviver-gke
-  namespace: ${K8S_NAMESPACE} # longeviver-dev-mateus-455600-namespace
+  namespace: ${K8S_NAMESPACE}
 spec:
   replicas: 1
   selector:
@@ -11,15 +11,37 @@ spec:
   template:
     metadata:
       annotations:
-        iam.gke.io/gcp-service-account: ${GCP_SERVICE_ACCOUNT}  # k8s-service-account@longeviver-dev-mateus-455600.iam.gserviceaccount.com
+        iam.gke.io/gcp-service-account: ${GCP_SERVICE_ACCOUNT}
       labels:
         app: longeviver-gke
     spec:
-      serviceAccountName: ${GCP_SERVICE_ACCOUNT_NAME} # longeviver-dev-mateus-455600-ksa
+      serviceAccountName: ${GCP_SERVICE_ACCOUNT_NAME}
       containers:
         - name: longeviver-gke
-          image: ${DOCKER_IMAGE} # us-central1-docker.pkg.dev/longeviver-dev-mateus-455600/longeviverfitness-repositorio/longeviverfitness:v100
+          image: ${DOCKER_IMAGE}
           ports:
             - containerPort: 8080
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: gke-cloud-sql-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: gke-cloud-sql-secrets
+                  key: password
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: gke-cloud-sql-secrets
+                  key: db_host
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: gke-cloud-sql-secrets
+                  key: database
+
       imagePullSecrets:
         - name: artifact-registry-secret

@@ -30,6 +30,9 @@ on:
       k8s_certificate_authority:
         description: "Certificado de autoridade do cluster Kubernetes"
         value: ${{ jobs.apply.outputs.tf_k8s_certificate_authority }}
+      tf_db_host:
+        description: "Host do banco de dados"
+        value: ${{ jobs.apply.outputs.tf_db_host }}
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
@@ -113,8 +116,12 @@ jobs:
           K8S_CERTIFICATE_AUTHORITY=$(terraform output -raw k8s_certificate_authority)
           echo "tf_k8s_certificate_authority=${K8S_CERTIFICATE_AUTHORITY}" >> $GITHUB_OUTPUT
 
+          DB_HOST=$(terraform output -raw db_host)
+          echo "tf_db_host=${DB_HOST}" >> $GITHUB_OUTPUT
+
     outputs:
       tf_k8s_service_account_email: ${{ steps.get_outputs.outputs.tf_k8s_service_account_email }}
       tf_k8s_service_account_name: ${{ steps.get_outputs.outputs.tf_k8s_service_account_name }}
       tf_k8s_endpoint: ${{ steps.get_outputs.outputs.tf_k8s_endpoint }}
       tf_k8s_certificate_authority: ${{ steps.get_outputs.outputs.tf_k8s_certificate_authority }}
+      tf_db_host: ${{ steps.get_outputs.outputs.tf_db_host }}

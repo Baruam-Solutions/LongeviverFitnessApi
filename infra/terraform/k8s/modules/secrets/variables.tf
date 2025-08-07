@@ -14,6 +14,12 @@ variable "password" {
   sensitive   = true
 }
 
+variable "db_host" {
+  description = "Host do banco de dados"
+  type        = string
+  sensitive   = true
+}
+
 variable "cluster_namespace" {
   description = "Namespace do cluster Kubernetes onde o Secret será criado"
   type        = string
