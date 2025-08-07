@@ -48,6 +48,10 @@ jobs:
           DECODED_EMAIL=$(echo "${{ inputs.K8S_SERVICE_ACCOUNT_EMAIL }}" | base64 --decode)
           echo "TF_VAR_K8S_SERVICE_ACCOUNT_EMAIL=${DECODED_EMAIL}" >> $GITHUB_ENV
 
+          # Decodifica o nome da Service Account e exporta como variável de ambiente
+          DECODED_NAME=$(echo "${{ inputs.K8S_SERVICE_ACCOUNT_NAME }}" | base64 --decode)
+          echo "TF_VAR_K8S_SERVICE_ACCOUNT_NAME=${DECODED_NAME}" >> $GITHUB_ENV
+
           # Decodifica o namespace do Kubernetes e exporta como variável de ambiente
           DECODED_NAMESPACE=$(echo "${{ inputs.K8S_NAMESPACE }}" | base64 --decode)
           echo "TF_VAR_K8S_NAMESPACE=${DECODED_NAMESPACE}" >> $GITHUB_ENV
