@@ -30,6 +30,9 @@ on:
       k8s_namespace:
         description: "Namespace do Kubernetes"
         value: ${{ jobs.apply.outputs.tf_k8s_namespace }}
+      ksa_name:
+        description: "Name do Kubernetes service account"
+        value: ${{ jobs.apply.outputs.tf_ksa_name }}
 
 # Ativa o uso de OIDC no workflow do GitHub Actions
 permissions:
@@ -56,12 +59,12 @@ jobs:
         uses: actions/checkout@v4
 
       # Autenticação com Google Cloud usando Workload Identity Federation
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v2'
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}'
-          service_account: 'github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
+          workload_identity_provider: projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}
+          service_account: github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com
 
       - name: Decode K8s Service Account details
         run: |
@@ -104,6 +107,10 @@ jobs:
         run: |
           K8S_NAMESPACE=$(terraform output -raw k8s_namespace | base64 -w 0)
           echo "tf_k8s_namespace=${K8S_NAMESPACE}" >> $GITHUB_OUTPUT
+          
+          KSA_NAME=$(terraform output -raw ksa_name | base64 -w 0)
+          echo "tf_ksa_name=${KSA_NAME}" >> $GITHUB_OUTPUT
 
     outputs:
       tf_k8s_namespace: ${{ steps.get_outputs.outputs.tf_k8s_namespace }}
+      tf_ksa_name: ${{ steps.get_outputs.outputs.tf_ksa_name }}

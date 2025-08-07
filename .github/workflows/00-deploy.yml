@@ -65,5 +65,5 @@ jobs:
       ENV_NAME: ${{ github.event.inputs.environment }}
       K8S_WORKDIR: infra/k8s/
       K8S_SERVICE_ACCOUNT_EMAIL: ${{ needs.main-resources.outputs.k8s_service_account_email }}
-      K8S_SERVICE_ACCOUNT_NAME: ${{ needs.main-resources.outputs.k8s_service_account_name }}
+      K8S_SERVICE_ACCOUNT_NAME: ${{ needs.k8s.outputs.ksa_name }}
       K8S_NAMESPACE: ${{ needs.k8s.outputs.k8s_namespace }}

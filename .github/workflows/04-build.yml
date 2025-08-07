@@ -55,12 +55,12 @@ jobs:
           cache-to: type=gha,mode=max # Salva o cache para futuras execuções
 
       # Autenticação com Google Cloud usando Workload Identity Federation
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v2'
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: 'projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}'
-          service_account: 'github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com'
+          workload_identity_provider: projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}
+          service_account: github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com
 
       # Configurar Docker para usar gcloud como helper de credenciais
       - name: Configure Docker with Artifact Registry
