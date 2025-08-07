@@ -31,9 +31,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-
       # Autenticação com Google Cloud usando Workload Identity Federation
       - id: auth
         name: Authenticate to Google Cloud
@@ -41,6 +38,9 @@ jobs:
         with:
           workload_identity_provider: projects/${{ vars.TF_VAR_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.TF_VAR_GIT_POOL }}/providers/${{ vars.TF_VAR_GIT_PROVIDER }}
           service_account: github-actions-sa@${{ vars.TF_VAR_PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: Decode K8s Service Account details
         run: |
