@@ -116,9 +116,9 @@ jobs:
           K8S_CERTIFICATE_AUTHORITY=$(terraform output -raw k8s_certificate_authority)
           echo "tf_k8s_certificate_authority=${K8S_CERTIFICATE_AUTHORITY}" >> $GITHUB_OUTPUT
 
-          DB_HOST=$(terraform output -raw db_host)
+          DB_HOST=$(terraform output -raw db_host | base64 -w 0) 
           echo "tf_db_host=${DB_HOST}" >> $GITHUB_OUTPUT
-
+# todo validar host que esta sendo passado para secrets do gke
     outputs:
       tf_k8s_service_account_email: ${{ steps.get_outputs.outputs.tf_k8s_service_account_email }}
       tf_k8s_service_account_name: ${{ steps.get_outputs.outputs.tf_k8s_service_account_name }}
